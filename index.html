@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EasyZakat 2025 - Zakat Calculator</title>
-  <meta name="description" content="EasyZakat 2025: Multilingual Zakat Calculator with mobile-friendly design and FAQ. Calculate your Zakat in major European languages, Turkish, Persian, and Arabic." />
+  <meta name="description" content="EasyZakat 2025: Multilingual Zakat Calculator with mobile-friendly design and FAQ. Calculate your Zakat in English, German, French, Spanish, Italian, Turkish, Persian, and Arabic." />
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; color: #333; }
     header { background: #2c3e50; color: white; padding: 1em; text-align: center; }
@@ -44,8 +44,7 @@
       <button onclick="calculateZakat()" id="calcBtn">Calculate Zakat</button>
       <div class="result" id="zakatResult"></div>
     </section>
-
-    <section>
+<section>
       <h2 id="whatIsZakatTitle">What is Zakat?</h2>
       <p id="whatIsZakatDesc">Zakat is a form of almsgiving and one of the Five Pillars of Islam. It is a religious obligation for Muslims to give a portion of their wealth to those in need.</p>
     </section>
@@ -60,6 +59,7 @@
   <footer>
     &copy; 2025 EasyZakat. All rights reserved.
   </footer>
+
   <script>
     const translations = {
       de: {
@@ -79,8 +79,8 @@
         faq2a: "A: Zakat ist einmal jährlich fällig, nachdem ein Mondjahr vergangen ist.",
         faq3q: "F: Welche Vermögenswerte sind zakatpflichtig?",
         faq3a: "A: Bargeld, Gold, Silber, Geschäftsvermögen und Investitionen sind zakatpflichtig. Persönliche Gegenstände wie Haus und Auto nicht."
-      }
-      // Weitere Sprachen können hier ergänzt werden
+      },
+      // Weitere Sprachen hier ergänzen (fr, es, it, tr, fa, ar)
     };
 
     function setLanguage(lang) {

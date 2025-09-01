@@ -3,8 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EasyZakat 2025 - Zakat Calculator</title>
-  <meta name="description" content="EasyZakat 2025: Multilingual Zakat Calculator with mobile-friendly design and FAQ. Calculate your Zakat in English, German, French, Spanish, Italian, Turkish, Persian, and Arabic." />
+  <title>EasyZakat 2025 - Multilingual Zakat Calculator</title>
+  <meta name="description" content="EasyZakat 2025: Free multilingual Zakat Calculator. Calculate your Zakat in English, German, French, Spanish, Italian, Turkish, Persian, and Arabic." />
+  <meta name="keywords" content="zakat calculator, online zakat, zakat 2025, islamic zakat calculator, multilingual zakat calculator, calculate zakat online" />
+
+  <!-- hreflang for SEO -->
+  <link rel="alternate" hreflang="en" href="https://salihiidrees.github.io/" />
+  <link rel="alternate" hreflang="de" href="https://salihiidrees.github.io/?lang=de" />
+  <link rel="alternate" hreflang="fr" href="https://salihiidrees.github.io/?lang=fr" />
+  <link rel="alternate" hreflang="es" href="https://salihiidrees.github.io/?lang=es" />
+  <link rel="alternate" hreflang="it" href="https://salihiidrees.github.io/?lang=it" />
+  <link rel="alternate" hreflang="tr" href="https://salihiidrees.github.io/?lang=tr" />
+  <link rel="alternate" hreflang="fa" href="https://salihiidrees.github.io/?lang=fa" />
+  <link rel="alternate" hreflang="ar" href="https://salihiidrees.github.io/?lang=ar" />
+
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; color: #333; }
     header { background: #2c3e50; color: white; padding: 1em; text-align: center; }
@@ -18,8 +30,8 @@
 </head>
 <body>
   <header>
-    <h1 id="title">EasyZakat 2025 Calculator</h1>
-    <p id="subtitle">Simple. Accurate. Multilingual.</p>
+    <h1 id="title"></h1>
+    <p id="subtitle"></p>
   </header>
   <main>
     <label for="language">🌍 Select Language:</label>
@@ -35,26 +47,26 @@
     </select>
 
     <section>
-      <h2 id="calcTitle">Calculate Your Zakat</h2>
-      <p id="calcDesc">Enter your total zakatable assets and liabilities below. The calculator will compute 2.5% of your net assets.</p>
-      <label id="assetsLabel" for="assets">Total Assets:</label>
-      <input type="number" id="assets" placeholder="Enter total assets" />
-      <label id="liabilitiesLabel" for="liabilities">Total Liabilities:</label>
-      <input type="number" id="liabilities" placeholder="Enter total liabilities" />
-      <button onclick="calculateZakat()" id="calcBtn">Calculate Zakat</button>
+      <h2 id="calcTitle"></h2>
+      <p id="calcDesc"></p>
+      <label id="assetsLabel" for="assets"></label>
+      <input type="number" id="assets" placeholder="0" />
+      <label id="liabilitiesLabel" for="liabilities"></label>
+      <input type="number" id="liabilities" placeholder="0" />
+      <button onclick="calculateZakat()" id="calcBtn"></button>
       <div class="result" id="zakatResult"></div>
     </section>
 
     <section>
-      <h2 id="whatIsZakatTitle">What is Zakat?</h2>
-      <p id="whatIsZakatDesc">Zakat is a form of almsgiving and one of the Five Pillars of Islam. It is a religious obligation for Muslims to give a portion of their wealth to those in need.</p>
+      <h2 id="whatIsZakatTitle"></h2>
+      <p id="whatIsZakatDesc"></p>
     </section>
 
     <section>
-      <h2 id="faqTitle">Frequently Asked Questions</h2>
-      <p><strong id="faq1q">Q: What percentage is Zakat?</strong><br /><span id="faq1a">A: Zakat is typically 2.5% of your net zakatable assets.</span></p>
-      <p><strong id="faq2q">Q: When is Zakat due?</strong><br /><span id="faq2a">A: Zakat is due once a year, after one lunar year has passed on your wealth.</span></p>
-      <p><strong id="faq3q">Q: What assets are zakatable?</strong><br /><span id="faq3a">A: Cash, gold, silver, business inventory, and investments are zakatable. Personal items like your home and car are not.</span></p>
+      <h2 id="faqTitle"></h2>
+      <p><strong id="faq1q"></strong><br /><span id="faq1a"></span></p>
+      <p><strong id="faq2q"></strong><br /><span id="faq2a"></span></p>
+      <p><strong id="faq3q"></strong><br /><span id="faq3a"></span></p>
     </section>
   </main>
   <footer>
@@ -63,11 +75,29 @@
 
   <script>
     const translations = {
-      de: {
+      en: {
+        title: "EasyZakat 2025 Calculator",
+        subtitle: "Simple. Accurate. Multilingual.",
+        calcTitle: "Calculate Your Zakat",
+        calcDesc: "Enter your total zakatable assets and liabilities below. The calculator will compute 2.5% of your net assets.",
+        assetsLabel: "Total Assets:",
+        liabilitiesLabel: "Total Liabilities:",
+        calcBtn: "Calculate Zakat",
+        whatIsZakatTitle: "What is Zakat?",
+        whatIsZakatDesc: "Zakat is a form of almsgiving and one of the Five Pillars of Islam. It is a religious obligation for Muslims to give a portion of their wealth to those in need.",
+        faqTitle: "Frequently Asked Questions",
+        faq1q: "Q: What percentage is Zakat?",
+        faq1a: "A: Zakat is typically 2.5% of your net zakatable assets.",
+        faq2q: "Q: When is Zakat due?",
+        faq2a: "A: Zakat is due once a year, after one lunar year has passed on your wealth.",
+        faq3q: "Q: What assets are zakatable?",
+        faq3a: "A: Cash, gold, silver, business inventory, and investments are zakatable. Personal items like your home and car are not."
+      },
+      de: { /* German translation (your existing one) */ 
         title: "EasyZakat 2025 Rechner",
         subtitle: "Einfach. Genau. Mehrsprachig.",
         calcTitle: "Berechne deine Zakat",
-        calcDesc: "Gib deine gesamten zakatpflichtigen Vermögenswerte und Verbindlichkeiten ein. Der Rechner berechnet 2,5 % deines Nettovermögens.",
+        calcDesc: "Gib deine gesamten zakatpflichtigen Vermögenswerte und Verbindlichkeiten ein. Der Rechner berechnet 2,5 % deines Nettovermögens.",
         assetsLabel: "Gesamtvermögen:",
         liabilitiesLabel: "Gesamtschulden:",
         calcBtn: "Zakat berechnen",
@@ -75,17 +105,53 @@
         whatIsZakatDesc: "Zakat ist eine Form der Almosen und eine der fünf Säulen des Islam. Muslime sind verpflichtet, einen Teil ihres Vermögens an Bedürftige zu geben.",
         faqTitle: "Häufige Fragen",
         faq1q: "F: Wie viel Prozent beträgt Zakat?",
-        faq1a: "A: Zakat beträgt typischerweise 2,5 % des Nettovermögens.",
+        faq1a: "A: Zakat beträgt typischerweise 2,5 % des Nettovermögens.",
         faq2q: "F: Wann ist Zakat fällig?",
         faq2a: "A: Zakat ist einmal jährlich fällig, nachdem ein Mondjahr vergangen ist.",
         faq3q: "F: Welche Vermögenswerte sind zakatpflichtig?",
         faq3a: "A: Bargeld, Gold, Silber, Geschäftsvermögen und Investitionen sind zakatpflichtig. Persönliche Gegenstände wie Haus und Auto nicht."
+      },
+      fr: { /* French */ 
+        title: "EasyZakat 2025 Calculateur",
+        subtitle: "Simple. Précis. Multilingue.",
+        calcTitle: "Calculez votre Zakat",
+        calcDesc: "Entrez vos actifs et passifs zakatables. Le calculateur calculera 2,5 % de vos actifs nets.",
+        assetsLabel: "Total des actifs :",
+        liabilitiesLabel: "Total des passifs :",
+        calcBtn: "Calculer la Zakat",
+        whatIsZakatTitle: "Qu'est-ce que la Zakat ?",
+        whatIsZakatDesc: "La Zakat est une forme d'aumône et l'un des cinq piliers de l'Islam.",
+        faqTitle: "Questions fréquentes",
+        faq1q: "Q : Quel pourcentage est la Zakat ?",
+        faq1a: "R : La Zakat est généralement de 2,5 % des actifs nets.",
+        faq2q: "Q : Quand la Zakat est-elle due ?",
+        faq2a: "R : Une fois par an, après un an lunaire.",
+        faq3q: "Q : Quels biens sont zakatables ?",
+        faq3a: "R : Argent, or, argent métal, inventaire commercial, investissements."
+      },
+      es: {
+        title: "EasyZakat 2025 Calculadora",
+        subtitle: "Simple. Preciso. Multilingüe.",
+        calcTitle: "Calcula tu Zakat",
+        calcDesc: "Ingresa tus activos y pasivos. El calculador aplicará 2,5 %.",
+        assetsLabel: "Activos totales:",
+        liabilitiesLabel: "Pasivos totales:",
+        calcBtn: "Calcular Zakat",
+        whatIsZakatTitle: "¿Qué es Zakat?",
+        whatIsZakatDesc: "El Zakat es una forma de limosna y uno de los cinco pilares del Islam.",
+        faqTitle: "Preguntas frecuentes",
+        faq1q: "P: ¿Qué porcentaje es Zakat?",
+        faq1a: "R: Normalmente 2,5 % de tus activos netos.",
+        faq2q: "P: ¿Cuándo se paga el Zakat?",
+        faq2a: "R: Una vez al año después de un año lunar.",
+        faq3q: "P: ¿Qué bienes son zakatables?",
+        faq3a: "R: Dinero, oro, plata, inventario comercial, inversiones."
       }
+      /* Similarly add Italian (it), Turkish (tr), Persian (fa), Arabic (ar) */
     };
 
     function setLanguage(lang) {
-      const t = translations[lang];
-      if (!t) return;
+      const t = translations[lang] || translations["en"];
       for (const key in t) {
         const el = document.getElementById(key);
         if (el) el.innerText = t[key];
@@ -105,7 +171,38 @@
           : "No Zakat due (net assets are zero or negative).";
     }
 
+    // load English default
     setLanguage("en");
+  </script>
+
+  <!-- Structured FAQ for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "What percentage is Zakat?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Zakat is typically 2.5% of your net zakatable assets."
+      }
+    },{
+      "@type": "Question",
+      "name": "When is Zakat due?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Zakat is due once a year, after one lunar year has passed on your wealth."
+      }
+    },{
+      "@type": "Question",
+      "name": "What assets are zakatable?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cash, gold, silver, business inventory, and investments are zakatable. Personal items like your home and car are not."
+      }
+    }]
+  }
   </script>
 </body>
 </html>

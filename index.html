@@ -3,206 +3,157 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EasyZakat 2025 - Multilingual Zakat Calculator</title>
-  <meta name="description" content="EasyZakat 2025: Free multilingual Zakat Calculator. Calculate your Zakat in English, German, French, Spanish, Italian, Turkish, Persian, and Arabic." />
-  <meta name="keywords" content="zakat calculator, online zakat, zakat 2025, islamic zakat calculator, multilingual zakat calculator, calculate zakat online" />
-
-  <!-- hreflang for SEO -->
-  <link rel="alternate" hreflang="en" href="https://salihiidrees.github.io/" />
-  <link rel="alternate" hreflang="de" href="https://salihiidrees.github.io/?lang=de" />
-  <link rel="alternate" hreflang="fr" href="https://salihiidrees.github.io/?lang=fr" />
-  <link rel="alternate" hreflang="es" href="https://salihiidrees.github.io/?lang=es" />
-  <link rel="alternate" hreflang="it" href="https://salihiidrees.github.io/?lang=it" />
-  <link rel="alternate" hreflang="tr" href="https://salihiidrees.github.io/?lang=tr" />
-  <link rel="alternate" hreflang="fa" href="https://salihiidrees.github.io/?lang=fa" />
-  <link rel="alternate" hreflang="ar" href="https://salihiidrees.github.io/?lang=ar" />
-
+  <meta name="description" content="Free Online Zakat Calculator | Einfacher Zakat Rechner Online" />
+  <meta name="keywords" content="Zakat, Zakat Calculator, Zakat Rechner, Islam, Charity, Spende, 2.5%" />
+  <meta name="author" content="EasyZakat" />
+  <title>EasyZakat | Free Zakat Calculator Online</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; color: #333; }
-    header { background: #2c3e50; color: white; padding: 1em; text-align: center; }
-    main { padding: 2em; max-width: 700px; margin: auto; background: white; }
-    input, button, select { width: 100%; padding: 0.75em; margin: 0.5em 0; font-size: 1em; }
-    .result { background: #ecf0f1; padding: 1em; margin-top: 1em; font-weight: bold; }
-    section { margin-top: 2em; }
-    h2 { color: #2c3e50; }
-    footer { text-align: center; padding: 1em; background: #ddd; margin-top: 2em; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f7fa;
+      color: #333;
+    }
+    header {
+      background: #0a5c5a;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+    nav {
+      margin-top: 10px;
+    }
+    nav button {
+      margin: 5px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fff;
+      color: #0a5c5a;
+      font-weight: bold;
+    }
+    main {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    label, input {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 1em;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button.calculate {
+      background: #0a5c5a;
+      color: #fff;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      width: 100%;
+    }
+    button.calculate:hover {
+      background: #09706d;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+      text-align: center;
+      color: #0a5c5a;
+    }
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #0a5c5a;
+      color: #fff;
+      margin-top: 40px;
+      font-size: 0.9em;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1 id="title"></h1>
-    <p id="subtitle"></p>
+    <h1 id="title">EasyZakat - Free Online Zakat Calculator</h1>
+    <nav>
+      <button onclick="setLanguage('en')">English</button>
+      <button onclick="setLanguage('de')">Deutsch</button>
+    </nav>
   </header>
+
   <main>
-    <label for="language">🌍 Select Language:</label>
-    <select id="language" onchange="setLanguage(this.value)">
-      <option value="en">English</option>
-      <option value="de">Deutsch</option>
-      <option value="fr">Français</option>
-      <option value="es">Español</option>
-      <option value="it">Italiano</option>
-      <option value="tr">Türkçe</option>
-      <option value="fa">فارسی</option>
-      <option value="ar">العربية</option>
-    </select>
+    <h2 id="subtitle">Calculate your Zakat (2.5%) easily</h2>
 
-    <section>
-      <h2 id="calcTitle"></h2>
-      <p id="calcDesc"></p>
-      <label id="assetsLabel" for="assets"></label>
-      <input type="number" id="assets" placeholder="0" />
-      <label id="liabilitiesLabel" for="liabilities"></label>
-      <input type="number" id="liabilities" placeholder="0" />
-      <button onclick="calculateZakat()" id="calcBtn"></button>
-      <div class="result" id="zakatResult"></div>
-    </section>
+    <form id="zakatForm">
+      <label id="labelWealth" for="wealth">Enter your total wealth (savings, gold, cash):</label>
+      <input type="number" id="wealth" name="wealth" min="0" step="0.01" required />
+      
+      <button type="submit" class="calculate" id="calcBtn">Calculate Zakat</button>
+    </form>
 
-    <section>
-      <h2 id="whatIsZakatTitle"></h2>
-      <p id="whatIsZakatDesc"></p>
-    </section>
-
-    <section>
-      <h2 id="faqTitle"></h2>
-      <p><strong id="faq1q"></strong><br /><span id="faq1a"></span></p>
-      <p><strong id="faq2q"></strong><br /><span id="faq2a"></span></p>
-      <p><strong id="faq3q"></strong><br /><span id="faq3a"></span></p>
-    </section>
+    <div class="result" id="result"></div>
   </main>
+
   <footer>
-    &copy; 2025 EasyZakat. All rights reserved.
+    <p id="footerText">&copy; 2025 EasyZakat.com | A free tool to calculate your Zakat online.</p>
   </footer>
 
   <script>
     const translations = {
       en: {
-        title: "EasyZakat 2025 Calculator",
-        subtitle: "Simple. Accurate. Multilingual.",
-        calcTitle: "Calculate Your Zakat",
-        calcDesc: "Enter your total zakatable assets and liabilities below. The calculator will compute 2.5% of your net assets.",
-        assetsLabel: "Total Assets:",
-        liabilitiesLabel: "Total Liabilities:",
+        title: "EasyZakat - Free Online Zakat Calculator",
+        subtitle: "Calculate your Zakat (2.5%) easily",
+        labelWealth: "Enter your total wealth (savings, gold, cash):",
         calcBtn: "Calculate Zakat",
-        whatIsZakatTitle: "What is Zakat?",
-        whatIsZakatDesc: "Zakat is a form of almsgiving and one of the Five Pillars of Islam. It is a religious obligation for Muslims to give a portion of their wealth to those in need.",
-        faqTitle: "Frequently Asked Questions",
-        faq1q: "Q: What percentage is Zakat?",
-        faq1a: "A: Zakat is typically 2.5% of your net zakatable assets.",
-        faq2q: "Q: When is Zakat due?",
-        faq2a: "A: Zakat is due once a year, after one lunar year has passed on your wealth.",
-        faq3q: "Q: What assets are zakatable?",
-        faq3a: "A: Cash, gold, silver, business inventory, and investments are zakatable. Personal items like your home and car are not."
+        result: (value) => `Your Zakat is: $${value}`,
+        footer: "© 2025 EasyZakat.com | A free tool to calculate your Zakat online."
       },
-      de: { /* German translation (your existing one) */ 
-        title: "EasyZakat 2025 Rechner",
-        subtitle: "Einfach. Genau. Mehrsprachig.",
-        calcTitle: "Berechne deine Zakat",
-        calcDesc: "Gib deine gesamten zakatpflichtigen Vermögenswerte und Verbindlichkeiten ein. Der Rechner berechnet 2,5 % deines Nettovermögens.",
-        assetsLabel: "Gesamtvermögen:",
-        liabilitiesLabel: "Gesamtschulden:",
+      de: {
+        title: "EasyZakat - Kostenloser Zakat Rechner Online",
+        subtitle: "Berechne deine Zakat (2,5%) einfach",
+        labelWealth: "Gib dein gesamtes Vermögen ein (Ersparnisse, Gold, Bargeld):",
         calcBtn: "Zakat berechnen",
-        whatIsZakatTitle: "Was ist Zakat?",
-        whatIsZakatDesc: "Zakat ist eine Form der Almosen und eine der fünf Säulen des Islam. Muslime sind verpflichtet, einen Teil ihres Vermögens an Bedürftige zu geben.",
-        faqTitle: "Häufige Fragen",
-        faq1q: "F: Wie viel Prozent beträgt Zakat?",
-        faq1a: "A: Zakat beträgt typischerweise 2,5 % des Nettovermögens.",
-        faq2q: "F: Wann ist Zakat fällig?",
-        faq2a: "A: Zakat ist einmal jährlich fällig, nachdem ein Mondjahr vergangen ist.",
-        faq3q: "F: Welche Vermögenswerte sind zakatpflichtig?",
-        faq3a: "A: Bargeld, Gold, Silber, Geschäftsvermögen und Investitionen sind zakatpflichtig. Persönliche Gegenstände wie Haus und Auto nicht."
-      },
-      fr: { /* French */ 
-        title: "EasyZakat 2025 Calculateur",
-        subtitle: "Simple. Précis. Multilingue.",
-        calcTitle: "Calculez votre Zakat",
-        calcDesc: "Entrez vos actifs et passifs zakatables. Le calculateur calculera 2,5 % de vos actifs nets.",
-        assetsLabel: "Total des actifs :",
-        liabilitiesLabel: "Total des passifs :",
-        calcBtn: "Calculer la Zakat",
-        whatIsZakatTitle: "Qu'est-ce que la Zakat ?",
-        whatIsZakatDesc: "La Zakat est une forme d'aumône et l'un des cinq piliers de l'Islam.",
-        faqTitle: "Questions fréquentes",
-        faq1q: "Q : Quel pourcentage est la Zakat ?",
-        faq1a: "R : La Zakat est généralement de 2,5 % des actifs nets.",
-        faq2q: "Q : Quand la Zakat est-elle due ?",
-        faq2a: "R : Une fois par an, après un an lunaire.",
-        faq3q: "Q : Quels biens sont zakatables ?",
-        faq3a: "R : Argent, or, argent métal, inventaire commercial, investissements."
-      },
-      es: {
-        title: "EasyZakat 2025 Calculadora",
-        subtitle: "Simple. Preciso. Multilingüe.",
-        calcTitle: "Calcula tu Zakat",
-        calcDesc: "Ingresa tus activos y pasivos. El calculador aplicará 2,5 %.",
-        assetsLabel: "Activos totales:",
-        liabilitiesLabel: "Pasivos totales:",
-        calcBtn: "Calcular Zakat",
-        whatIsZakatTitle: "¿Qué es Zakat?",
-        whatIsZakatDesc: "El Zakat es una forma de limosna y uno de los cinco pilares del Islam.",
-        faqTitle: "Preguntas frecuentes",
-        faq1q: "P: ¿Qué porcentaje es Zakat?",
-        faq1a: "R: Normalmente 2,5 % de tus activos netos.",
-        faq2q: "P: ¿Cuándo se paga el Zakat?",
-        faq2a: "R: Una vez al año después de un año lunar.",
-        faq3q: "P: ¿Qué bienes son zakatables?",
-        faq3a: "R: Dinero, oro, plata, inventario comercial, inversiones."
+        result: (value) => `Deine Zakat beträgt: €${value}`,
+        footer: "© 2025 EasyZakat.com | Ein kostenloses Tool zur Berechnung deiner Zakat."
       }
-      /* Similarly add Italian (it), Turkish (tr), Persian (fa), Arabic (ar) */
     };
 
+    let currentLang = 'en';
+
     function setLanguage(lang) {
-      const t = translations[lang] || translations["en"];
-      for (const key in t) {
-        const el = document.getElementById(key);
-        if (el) el.innerText = t[key];
-      }
-      document.documentElement.lang = lang;
-      document.body.dir = (lang === "ar" || lang === "fa") ? "rtl" : "ltr";
+      currentLang = lang;
+      document.getElementById('title').innerText = translations[lang].title;
+      document.getElementById('subtitle').innerText = translations[lang].subtitle;
+      document.getElementById('labelWealth').innerText = translations[lang].labelWealth;
+      document.getElementById('calcBtn').innerText = translations[lang].calcBtn;
+      document.getElementById('footerText').innerText = translations[lang].footer;
     }
 
-    function calculateZakat() {
-      const assets = parseFloat(document.getElementById("assets").value) || 0;
-      const liabilities = parseFloat(document.getElementById("liabilities").value) || 0;
-      const netAssets = assets - liabilities;
-      const zakat = netAssets > 0 ? (netAssets * 0.025).toFixed(2) : 0;
-      document.getElementById("zakatResult").innerText =
-        netAssets > 0
-          ? `Zakat: ${zakat}`
-          : "No Zakat due (net assets are zero or negative).";
-    }
-
-    // load English default
-    setLanguage("en");
-  </script>
-
-  <!-- Structured FAQ for SEO -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [{
-      "@type": "Question",
-      "name": "What percentage is Zakat?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Zakat is typically 2.5% of your net zakatable assets."
+    document.getElementById('zakatForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const wealth = parseFloat(document.getElementById('wealth').value);
+      if (!isNaN(wealth) && wealth > 0) {
+        const zakat = (wealth * 0.025).toFixed(2);
+        document.getElementById('result').innerText = translations[currentLang].result(zakat);
+      } else {
+        document.getElementById('result').innerText = currentLang === 'en' ? "Please enter a valid amount." : "Bitte einen gültigen Betrag eingeben.";
       }
-    },{
-      "@type": "Question",
-      "name": "When is Zakat due?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Zakat is due once a year, after one lunar year has passed on your wealth."
-      }
-    },{
-      "@type": "Question",
-      "name": "What assets are zakatable?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Cash, gold, silver, business inventory, and investments are zakatable. Personal items like your home and car are not."
-      }
-    }]
-  }
+    });
   </script>
 </body>
 </html>

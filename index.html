@@ -1,976 +1,198 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>EasyZakat — Free Zakat Calculator (Multilingual)</title>
-  <meta name="description" content="EasyZakat — Free multilingual Zakat calculator (2.5%). Simplified and advanced modes. English, Deutsch, Français, Español, Italiano, Türkçe, فارسی, العربية, اردو." />
-  <meta name="keywords" content="zakat calculator, zakat berechnen, zakat rechner, حساب زكاة, Zakat Rechner online, zakat hesaplayıcı, zakat calculator multilingual" />
-  <link rel="canonical" href="https://salihiidrees.github.io/" />
-  <!-- hreflang for each language variant (single file with query param) -->
-  <link rel="alternate" hreflang="en" href="https://salihiidrees.github.io/?lang=en" />
-  <link rel="alternate" hreflang="de" href="https://salihiidrees.github.io/?lang=de" />
-  <link rel="alternate" hreflang="fr" href="https://salihiidrees.github.io/?lang=fr" />
-  <link rel="alternate" hreflang="es" href="https://salihiidrees.github.io/?lang=es" />
-  <link rel="alternate" hreflang="it" href="https://salihiidrees.github.io/?lang=it" />
-  <link rel="alternate" hreflang="tr" href="https://salihiidrees.github.io/?lang=tr" />
-  <link rel="alternate" hreflang="fa" href="https://salihiidrees.github.io/?lang=fa" />
-  <link rel="alternate" hreflang="ar" href="https://salihiidrees.github.io/?lang=ar" />
-  <link rel="alternate" hreflang="ur" href="https://salihiidrees.github.io/?lang=ur" />
-  <!-- Open Graph -->
-  <meta property="og:title" content="EasyZakat — Free Zakat Calculator" />
-  <meta property="og:description" content="Free multilingual Zakat calculator. Simplified and advanced modes. Calculate 2.5% Zakat instantly." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://salihiidrees.github.io/" />
-  <meta property="og:site_name" content="EasyZakat" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="EasyZakat — Free Zakat Calculator" />
-  <meta name="twitter:description" content="Calculate Zakat (2.5%) — simplified & advanced modes. Multilingual." />
-
-  <!-- ===== Google Analytics (GA4) placeholder =====
-       Replace G-YOUR-GA-ID with your GA4 measurement ID (G-XXXXXXXX).
-       If you don't have it yet, leaving this as-is is fine.
-  -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOUR-GA-ID"></script>
-  <script>
-    /* Replace 'G-YOUR-GA-ID' with your GA4 measurement ID to enable analytics */
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-YOUR-GA-ID');
-  </script>
-
-  <!-- ===== Google AdSense placeholder =====
-       After AdSense approval, paste your publisher ID (ca-pub-XXXXXXXXXXXX) below and
-       uncomment the <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" ...> line.
-  -->
-  <!--
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR-PUBLISHER-ID"
-     crossorigin="anonymous"></script>
-  -->
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyZakat Calculator</title>
   <style>
-    :root{
-      --accent:#0a5c5a;
-      --muted:#6b7280;
-      --bg:#f5f7fa;
-      --card:#fff;
-      --radius:10px;
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f8f9fa;
+      color: #333;
     }
-    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:var(--bg); color:#111;}
-    .container{max-width:980px;margin:28px auto;padding:20px;}
-    header{background:var(--accent);color:#fff;padding:20px;border-radius:12px;}
-    header h1{margin:0;font-size:1.6rem;}
-    header p{margin:6px 0 0;color:rgba(255,255,255,0.9);}
-    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center;}
-    .control{background:var(--card);padding:14px;border-radius:var(--radius);box-shadow:0 6px 18px rgba(16,24,40,0.06);}
-    .lang-select{display:flex;gap:8px;align-items:center;}
-    select,input[type="text"]{padding:8px;border-radius:8px;border:1px solid #d1d5db;}
-    .mode-toggle{display:flex;gap:8px;}
-    .btn{background:var(--accent);color:#fff;padding:10px 14px;border:none;border-radius:8px;cursor:pointer;font-weight:600;}
-    .btn.secondary{background:#fff;color:var(--accent);border:1px solid var(--accent);}
-    main{display:grid;grid-template-columns:1fr 380px;gap:18px;margin-top:18px;}
-    @media (max-width:900px){main{grid-template-columns:1fr;}}
-    .card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:0 6px 18px rgba(16,24,40,0.06);}
-    label{display:block;margin-bottom:6px;font-weight:600;color:var(--muted);}
-    input[type="number"]{padding:10px;border-radius:8px;border:1px solid #e5e7eb;width:100%;}
-    .result{font-size:1.2rem;padding:12px;border-radius:8px;background:#eef6f5;color:var(--accent);margin-top:12px;font-weight:700;text-align:center;}
-    .note{font-size:0.9rem;color:var(--muted);margin-top:8px;}
-    footer{margin-top:18px;text-align:center;color:var(--muted);font-size:0.9rem;}
-    .faq h3{margin:12px 0 6px;font-size:1rem;}
-    .small{font-size:0.9rem;color:var(--muted);}
-    .rtl{direction:rtl;text-align:right;}
+    header {
+      background: #007bff; color: white;
+      padding: 1rem; text-align: center;
+    }
+    .container {
+      max-width: 700px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    h2 { text-align: center; }
+    label { display: block; margin: 0.5rem 0 0.2rem; }
+    input {
+      width: 100%; padding: 0.5rem;
+      border: 1px solid #ccc; border-radius: 5px;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.7rem 1.5rem;
+      background: #007bff; color: white;
+      border: none; border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover { background: #0056b3; }
+    .result {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #e9f7ef;
+      border: 1px solid #28a745;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .mode-switch {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .lang-switch {
+      margin-bottom: 1rem;
+      text-align: right;
+    }
   </style>
 </head>
 <body>
-  <div class="container" id="app">
-    <header>
-      <h1 id="title">EasyZakat — Free Zakat Calculator</h1>
-      <p id="subtitle">Simplified & advanced modes • Multilingual</p>
+  <header>
+    <h1 id="title">EasyZakat Calculator</h1>
+  </header>
 
-      <div class="controls" style="margin-top:12px;">
-        <div class="control lang-select" style="padding:10px;">
-          <label for="lang" class="small" style="margin-right:8px;" id="langLabel">Language</label>
-          <select id="lang" aria-label="Select language">
-            <option value="en">English</option>
-            <option value="de">Deutsch</option>
-            <option value="fr">Français</option>
-            <option value="es">Español</option>
-            <option value="it">Italiano</option>
-            <option value="tr">Türkçe</option>
-            <option value="fa">فارسی</option>
-            <option value="ar">العربية</option>
-            <option value="ur">اردو</option>
-          </select>
-        </div>
+  <div class="container">
+    <!-- Language Switcher -->
+    <div class="lang-switch">
+      <label for="lang">🌍 Language:</label>
+      <select id="lang" onchange="switchLanguage()">
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+        <option value="fr">Français</option>
+        <option value="es">Español</option>
+        <option value="it">Italiano</option>
+        <option value="nl">Nederlands</option>
+        <option value="ar">العربية</option>
+        <option value="fa">فارسی</option>
+        <option value="ur">اردو</option>
+      </select>
+    </div>
 
-        <div class="control" style="padding:10px;">
-          <label class="small" id="currencyLabel">Currency symbol</label>
-          <input type="text" id="currency" value="€" maxlength="3" style="width:80px;" />
-        </div>
+    <!-- Mode Switch -->
+    <div class="mode-switch">
+      <button onclick="setMode('simple')">🌿 Simplified</button>
+      <button onclick="setMode('detailed')">📊 Detailed</button>
+    </div>
 
-        <div class="control mode-toggle" style="padding:10px;">
-          <label class="small" id="modeLabel">Mode</label>
-          <button class="btn secondary" id="simplifiedBtn">Simplified</button>
-          <button class="btn" id="advancedBtn">Advanced</button>
-        </div>
+    <!-- Form -->
+    <form id="zakatForm">
+      <div id="inputs"></div>
+      <button type="button" onclick="calculateZakat()">Calculate Zakat</button>
+    </form>
 
-        <div style="margin-left:auto;" class="control" id="nisabControl" style="padding:10px;">
-          <label class="small" id="nisabLabel">Nisab base</label>
-          <select id="nisabChoice">
-            <option value="gold">Gold (85 g)</option>
-            <option value="silver">Silver (595 g)</option>
-          </select>
-        </div>
-      </div>
-    </header>
-
-    <main>
-      <!-- LEFT: Calculator + Info -->
-      <section>
-        <div class="card" id="calculatorCard">
-          <h2 id="calcTitle">Calculate Your Zakat</h2>
-
-          <!-- Simplified mode -->
-          <div id="simplifiedSection">
-            <label id="totalAssetsLabel">Total assets</label>
-            <input type="number" id="totalAssets" step="0.01" placeholder="0" />
-
-            <label id="totalLiabilitiesLabel" style="margin-top:10px;">Total liabilities</label>
-            <input type="number" id="totalLiabilities" step="0.01" placeholder="0" />
-
-            <button class="btn" id="calcSimplified" style="margin-top:12px;">Calculate Zakat</button>
-            <div id="simplifiedResult" class="result" style="display:none"></div>
-          </div>
-
-          <!-- Advanced mode -->
-          <div id="advancedSection" style="display:none">
-            <label id="cashLabel">Cash & savings</label>
-            <input type="number" id="cash" step="0.01" placeholder="0" />
-
-            <label id="investmentsLabel">Investments / business value</label>
-            <input type="number" id="investments" step="0.01" placeholder="0" />
-
-            <label id="inventoryLabel">Business inventory (market value)</label>
-            <input type="number" id="inventory" step="0.01" placeholder="0" />
-
-            <label id="goldWeightLabel">Gold (grams)</label>
-            <input type="number" id="goldWeight" step="0.01" placeholder="0" />
-
-            <label id="goldPriceLabel">Gold price per gram</label>
-            <input type="number" id="goldPrice" step="0.01" placeholder="0" />
-
-            <label id="silverWeightLabel">Silver (grams)</label>
-            <input type="number" id="silverWeight" step="0.01" placeholder="0" />
-
-            <label id="silverPriceLabel">Silver price per gram</label>
-            <input type="number" id="silverPrice" step="0.01" placeholder="0" />
-
-            <label id="debtsLabel">Debts / liabilities</label>
-            <input type="number" id="debts" step="0.01" placeholder="0" />
-
-            <button class="btn" id="calcAdvanced" style="margin-top:12px;">Calculate Zakat (Advanced)</button>
-            <div id="advancedResult" class="result" style="display:none"></div>
-
-            <p class="note" id="nisabInfo">Nisab is calculated from selected base (Gold 85 g or Silver 595 g).</p>
-          </div>
-
-          <p class="note" style="margin-top:10px;" id="howWorks">How this works: net assets = assets - liabilities. If net assets ≥ nisab, Zakat = 2.5% of net assets.</p>
-        </div>
-
-        <div class="card" style="margin-top:16px;">
-          <h3 id="whatIsZakatTitle">What is Zakat?</h3>
-          <p id="whatIsZakatDesc">Zakat is a mandatory charitable giving in Islam — a portion of your zakatable wealth (typically 2.5%) given to eligible recipients (the poor, needy, etc.).</p>
-
-          <div class="faq" style="margin-top:12px;">
-            <h3 id="faqQ1">Q: What percentage is Zakat?</h3>
-            <p id="faqA1">A: Zakat is typically 2.5% of net zakatable assets.</p>
-            <h3 id="faqQ2">Q: When is Zakat due?</h3>
-            <p id="faqA2">A: Zakat is due once a lunar year has passed on the zakatable wealth.</p>
-            <h3 id="faqQ3">Q: What counts as zakatable?</h3>
-            <p id="faqA3">A: Cash, gold, silver, business inventory and investments are typically zakatable. Personal items like your main home and personal car are usually not.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- RIGHT: Quick guide and inputs summary -->
-      <aside>
-        <div class="card">
-          <h3 id="summaryTitle">Summary</h3>
-          <p class="small" id="summaryText">Enter values and choose mode. Output shows whether you are above Nisab and the Zakat amount.</p>
-          <div style="margin-top:12px;">
-            <strong id="nisabValueLabel">Current Nisab:</strong>
-            <div id="nisabValue" class="small">—</div>
-          </div>
-          <div style="margin-top:12px;">
-            <strong id="lastCalcLabel">Last calculation:</strong>
-            <div id="lastCalc" class="small">—</div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:12px;">
-          <h3 id="shareTitle">Share</h3>
-          <p class="small" id="shareText">Share this tool to help others calculate their Zakat.</p>
-          <div style="margin-top:10px;">
-            <button class="btn" id="copyLinkBtn">Copy link</button>
-          </div>
-        </div>
-      </aside>
-    </main>
-
-    <footer>
-      <div id="footerText">© 2025 EasyZakat • <a href="/privacy.html">Privacy</a> • <a href="/about.html">About</a></div>
-    </footer>
+    <!-- Result -->
+    <div id="result" class="result" style="display:none;"></div>
   </div>
 
-  <!-- ===== JSON-LD FAQ (English) for rich results ===== -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"FAQPage",
-    "mainEntity":[
-      {"@type":"Question","name":"What percentage is Zakat?","acceptedAnswer":{"@type":"Answer","text":"Zakat is typically 2.5% of your net zakatable assets."}},
-      {"@type":"Question","name":"When is Zakat due?","acceptedAnswer":{"@type":"Answer","text":"Zakat is due once a lunar year has passed on your zakatable wealth."}},
-      {"@type":"Question","name":"What assets are zakatable?","acceptedAnswer":{"@type":"Answer","text":"Cash, gold, silver, business inventory and many investments are zakatable. Personal items like a main home or a personal car usually are not."}}
-    ]
-  }
-  </script>
-
   <script>
-  /**************************************************************************
-   * TRANSLATIONS: English + Deutsch + Français + Español + Italiano +
-   * Türkçe + فارسی + العربية + اردو
-   *
-   * All keys used in DOM are provided for each language.
-   **************************************************************************/
-  const translations = {
-    en: {
-      title: "EasyZakat — Free Zakat Calculator",
-      subtitle: "Simplified & advanced modes • Multilingual",
-      langLabel: "Language",
-      currencyLabel: "Currency symbol",
-      modeLabel: "Mode",
-      nisabLabel: "Nisab base",
-      calcTitle: "Calculate Your Zakat",
-      totalAssetsLabel: "Total assets",
-      totalLiabilitiesLabel: "Total liabilities",
-      calcSimplifiedBtn: "Calculate Zakat",
-      calcAdvancedBtn: "Calculate Zakat (Advanced)",
-      cashLabel: "Cash & savings",
-      investmentsLabel: "Investments / business value",
-      inventoryLabel: "Business inventory (market value)",
-      goldWeightLabel: "Gold (grams)",
-      goldPriceLabel: "Gold price per gram",
-      silverWeightLabel: "Silver (grams)",
-      silverPriceLabel: "Silver price per gram",
-      debtsLabel: "Debts / liabilities",
-      nisabInfo: "Nisab is calculated from selected base (Gold 85 g or Silver 595 g).",
-      howWorks: "How this works: net assets = assets - liabilities. If net assets ≥ nisab, Zakat = 2.5% of net assets.",
-      whatIsZakatTitle: "What is Zakat?",
-      whatIsZakatDesc: "Zakat is a mandatory charitable giving in Islam — a portion of your zakatable wealth (typically 2.5%) given to eligible recipients.",
-      faqQ1: "Q: What percentage is Zakat?",
-      faqA1: "A: Zakat is typically 2.5% of net zakatable assets.",
-      faqQ2: "Q: When is Zakat due?",
-      faqA2: "A: Zakat is due once a lunar year has passed on the zakatable wealth.",
-      faqQ3: "Q: What counts as zakatable?",
-      faqA3: "A: Cash, gold, silver, business inventory and investments are typically zakatable. Personal items like your main home and personal car are usually not.",
-      summaryTitle: "Summary",
-      summaryText: "Enter values and choose mode. Output shows whether you are above Nisab and the Zakat amount.",
-      nisabValueLabel: "Current Nisab:",
-      lastCalcLabel: "Last calculation:",
-      shareTitle: "Share",
-      shareText: "Share this tool to help others calculate their Zakat.",
-      copyLinkBtn: "Copy link",
-      footerText: "© 2025 EasyZakat • Privacy • About",
-      belowNisab: "You are below Nisab. No Zakat due.",
-      resultText: "Your Zakat is:",
-      invalidInput: "Please enter valid numbers.",
-      simplifiedMode: "Simplified",
-      advancedMode: "Advanced"
-    },
+    // Nisab threshold (approx: 85g gold * 60€ = ~5100€) – can adjust
+    const nisab = 5100;
 
-    de: {
-      title: "EasyZakat — Kostenloser Zakat Rechner",
-      subtitle: "Einfach & Erweitert • Mehrsprachig",
-      langLabel: "Sprache",
-      currencyLabel: "Währungssymbol",
-      modeLabel: "Modus",
-      nisabLabel: "Nisab-Basis",
-      calcTitle: "Berechne deine Zakat",
-      totalAssetsLabel: "Gesamtvermögen",
-      totalLiabilitiesLabel: "Gesamtschulden",
-      calcSimplifiedBtn: "Zakat berechnen",
-      calcAdvancedBtn: "Zakat berechnen (Erweitert)",
-      cashLabel: "Bargeld & Ersparnisse",
-      investmentsLabel: "Investitionen / Geschäftsvermögen",
-      inventoryLabel: "Geschäfts-Inventar (Marktwert)",
-      goldWeightLabel: "Gold (Gramm)",
-      goldPriceLabel: "Goldpreis pro Gramm",
-      silverWeightLabel: "Silber (Gramm)",
-      silverPriceLabel: "Silberpreis pro Gramm",
-      debtsLabel: "Schulden / Verbindlichkeiten",
-      nisabInfo: "Die Nisab wird von der gewählten Basis berechnet (Gold 85 g oder Silber 595 g).",
-      howWorks: "So funktioniert es: Nettovermögen = Vermögen - Verbindlichkeiten. Wenn Nettovermögen ≥ Nisab, Zakat = 2,5 % des Nettovermögens.",
-      whatIsZakatTitle: "Was ist Zakat?",
-      whatIsZakatDesc: "Zakat ist eine verpflichtende Almosenabgabe im Islam — ein Teil des zakatpflichtigen Vermögens (typisch 2,5 %).",
-      faqQ1: "F: Wie viel Prozent beträgt Zakat?",
-      faqA1: "A: Zakat beträgt typischerweise 2,5 % des Nettovermögens.",
-      faqQ2: "F: Wann ist Zakat fällig?",
-      faqA2: "A: Zakat ist fällig, nachdem ein Mondjahr auf das zakatpflichtige Vermögen vergangen ist.",
-      faqQ3: "F: Welche Vermögenswerte sind zakatpflichtig?",
-      faqA3: "A: Bargeld, Gold, Silber, Geschäfts-Inventar und Investitionen sind normalerweise zakatpflichtig. Private Gegenstände wie Hauptwohnsitz oder Auto in der Regel nicht.",
-      summaryTitle: "Zusammenfassung",
-      summaryText: "Gib Werte ein und wähle den Modus. Ausgabe zeigt, ob du über der Nisab liegst und wie viel Zakat fällig ist.",
-      nisabValueLabel: "Aktuelle Nisab:",
-      lastCalcLabel: "Letzte Berechnung:",
-      shareTitle: "Teilen",
-      shareText: "Teile dieses Tool, um anderen bei der Berechnung ihrer Zakat zu helfen.",
-      copyLinkBtn: "Link kopieren",
-      footerText: "© 2025 EasyZakat • Datenschutz • Über uns",
-      belowNisab: "Du bist unter der Nisab. Keine Zakat fällig.",
-      resultText: "Deine Zakat beträgt:",
-      invalidInput: "Bitte gültige Zahlen eingeben.",
-      simplifiedMode: "Einfach",
-      advancedMode: "Erweitert"
-    },
+    let mode = "simple";
+    let currentLang = "en";
 
-    fr: {
-      title: "EasyZakat — Calculateur de Zakat gratuit",
-      subtitle: "Mode simplifié & avancé • Multilingue",
-      langLabel: "Langue",
-      currencyLabel: "Symbole monétaire",
-      modeLabel: "Mode",
-      nisabLabel: "Base Nisab",
-      calcTitle: "Calculez votre Zakat",
-      totalAssetsLabel: "Actifs totaux",
-      totalLiabilitiesLabel: "Passifs totaux",
-      calcSimplifiedBtn: "Calculer la Zakat",
-      calcAdvancedBtn: "Calculer (Avancé)",
-      cashLabel: "Espèces & épargnes",
-      investmentsLabel: "Investissements / valeur de l'entreprise",
-      inventoryLabel: "Inventaire commercial (valeur marchande)",
-      goldWeightLabel: "Or (grammes)",
-      goldPriceLabel: "Prix de l'or par gramme",
-      silverWeightLabel: "Argent (grammes)",
-      silverPriceLabel: "Prix de l'argent par gramme",
-      debtsLabel: "Dettes / passifs",
-      nisabInfo: "La Nisab est calculée à partir de la base choisie (Or 85 g ou Argent 595 g).",
-      howWorks: "Fonctionnement : actifs nets = actifs - passifs. Si actifs nets ≥ Nisab, Zakat = 2,5 % des actifs nets.",
-      whatIsZakatTitle: "Qu'est-ce que la Zakat ?",
-      whatIsZakatDesc: "La Zakat est une aumône obligatoire en Islam — une portion de vos richesses zakatables (généralement 2,5 %).",
-      faqQ1: "Q : Quel pourcentage pour la Zakat ?",
-      faqA1: "R : La Zakat est généralement de 2,5 % des actifs nets.",
-      faqQ2: "Q : Quand la Zakat est-elle due ?",
-      faqA2: "R : Une fois par an, après une année lunaire sur les richesses zakatables.",
-      faqQ3: "Q : Quels actifs sont zakatables ?",
-      faqA3: "R : Espèces, or, argent, inventaire commercial et investissements sont généralement zakatables.",
-      summaryTitle: "Résumé",
-      summaryText: "Entrez les valeurs et choisissez le mode. Le résultat indique si vous êtes au-dessus de la Nisab et le montant de la Zakat.",
-      nisabValueLabel: "Nisab actuelle :",
-      lastCalcLabel: "Dernier calcul :",
-      shareTitle: "Partager",
-      shareText: "Partagez cet outil pour aider les autres à calculer leur Zakat.",
-      copyLinkBtn: "Copier le lien",
-      footerText: "© 2025 EasyZakat • Confidentialité • À propos",
-      belowNisab: "Vous êtes en dessous de la Nisab. Aucune Zakat due.",
-      resultText: "Votre Zakat est :",
-      invalidInput: "Veuillez entrer des nombres valides.",
-      simplifiedMode: "Simplifié",
-      advancedMode: "Avancé"
-    },
+    const translations = {
+      en: {
+        title: "EasyZakat Calculator",
+        simpleFields: {
+          savings: "Savings (Cash/Bank)",
+          gold: "Gold Value (€)",
+          silver: "Silver Value (€)"
+        },
+        detailedFields: {
+          cash: "Cash & Bank",
+          gold: "Gold Value (€)",
+          silver: "Silver Value (€)",
+          investments: "Investments (Stocks, Funds)",
+          business: "Business Assets",
+          debts: "Debts (Deductible)"
+        },
+        calculate: "Calculate Zakat",
+        result: amt => `Your Zakat is: €${amt.toFixed(2)}`
+      },
+      de: {
+        title: "Zakat Rechner",
+        simpleFields: {
+          savings: "Ersparnisse (Bargeld/Bank)",
+          gold: "Goldwert (€)",
+          silver: "Silberwert (€)"
+        },
+        detailedFields: {
+          cash: "Bargeld & Bank",
+          gold: "Goldwert (€)",
+          silver: "Silberwert (€)",
+          investments: "Investitionen (Aktien, Fonds)",
+          business: "Geschäftsvermögen",
+          debts: "Schulden (abziehbar)"
+        },
+        calculate: "Zakat berechnen",
+        result: amt => `Ihre Zakat beträgt: €${amt.toFixed(2)}`
+      },
+      // TODO: Add other translations (fr, es, it, nl, ar, fa, ur) – structure same as above
+    };
 
-    es: {
-      title: "EasyZakat — Calculadora de Zakat gratis",
-      subtitle: "Modo simplificado y avanzado • Multilingüe",
-      langLabel: "Idioma",
-      currencyLabel: "Símbolo de moneda",
-      modeLabel: "Modo",
-      nisabLabel: "Base Nisab",
-      calcTitle: "Calcula tu Zakat",
-      totalAssetsLabel: "Activos totales",
-      totalLiabilitiesLabel: "Pasivos totales",
-      calcSimplifiedBtn: "Calcular Zakat",
-      calcAdvancedBtn: "Calcular Zakat (Avanzado)",
-      cashLabel: "Efectivo y ahorros",
-      investmentsLabel: "Inversiones / valor del negocio",
-      inventoryLabel: "Inventario comercial (valor de mercado)",
-      goldWeightLabel: "Oro (gramos)",
-      goldPriceLabel: "Precio del oro por gramo",
-      silverWeightLabel: "Plata (gramos)",
-      silverPriceLabel: "Precio de la plata por gramo",
-      debtsLabel: "Deudas / pasivos",
-      nisabInfo: "La Nisab se calcula a partir de la base seleccionada (Oro 85 g o Plata 595 g).",
-      howWorks: "Cómo funciona: activos netos = activos - pasivos. Si activos netos ≥ Nisab, Zakat = 2,5% de los activos netos.",
-      whatIsZakatTitle: "¿Qué es la Zakat?",
-      whatIsZakatDesc: "La Zakat es una limosna obligatoria en el Islam — una porción de sus riquezas zakatables (generalmente 2,5%).",
-      faqQ1: "P: ¿Qué porcentaje es Zakat?",
-      faqA1: "R: Normalmente 2,5% de los activos netos.",
-      faqQ2: "P: ¿Cuándo se debe pagar la Zakat?",
-      faqA2: "R: Una vez al año, después de un año lunar sobre las riquezas zakatables.",
-      faqQ3: "P: ¿Qué activos son zakatables?",
-      faqA3: "R: Efectivo, oro, plata, inventario comercial e inversiones suelen ser zakatables.",
-      summaryTitle: "Resumen",
-      summaryText: "Ingrese los valores y elija el modo. La salida muestra si está por encima de la Nisab y el monto de la Zakat.",
-      nisabValueLabel: "Nisab actual:",
-      lastCalcLabel: "Último cálculo:",
-      shareTitle: "Compartir",
-      shareText: "Comparte esta herramienta para ayudar a otros a calcular su Zakat.",
-      copyLinkBtn: "Copiar enlace",
-      footerText: "© 2025 EasyZakat • Privacidad • Acerca de",
-      belowNisab: "Estás por debajo de la Nisab. No hay Zakat debida.",
-      resultText: "Tu Zakat es:",
-      invalidInput: "Por favor ingrese números válidos.",
-      simplifiedMode: "Simplificado",
-      advancedMode: "Avanzado"
-    },
-
-    it: {
-      title: "EasyZakat — Calcolatore Zakat gratuito",
-      subtitle: "Modalità semplificata e avanzata • Multilingue",
-      langLabel: "Lingua",
-      currencyLabel: "Simbolo valuta",
-      modeLabel: "Modalità",
-      nisabLabel: "Base Nisab",
-      calcTitle: "Calcola la tua Zakat",
-      totalAssetsLabel: "Patrimonio totale",
-      totalLiabilitiesLabel: "Passività totali",
-      calcSimplifiedBtn: "Calcola Zakat",
-      calcAdvancedBtn: "Calcola Zakat (Avanzato)",
-      cashLabel: "Contanti & risparmi",
-      investmentsLabel: "Investimenti / valore azienda",
-      inventoryLabel: "Inventario aziendale (valore di mercato)",
-      goldWeightLabel: "Oro (grammi)",
-      goldPriceLabel: "Prezzo dell'oro per grammo",
-      silverWeightLabel: "Argento (grammi)",
-      silverPriceLabel: "Prezzo dell'argento per grammo",
-      debtsLabel: "Debiti / passività",
-      nisabInfo: "La Nisab viene calcolata dalla base selezionata (Oro 85 g o Argento 595 g).",
-      howWorks: "Funzionamento: patrimonio netto = asset - passività. Se patrimonio netto ≥ Nisab, Zakat = 2,5% del patrimonio netto.",
-      whatIsZakatTitle: "Cos'è la Zakat?",
-      whatIsZakatDesc: "La Zakat è un'elemosina obbligatoria nell'Islam — una parte della tua ricchezza zakatable (tipicamente 2,5%).",
-      faqQ1: "D: Qual è la percentuale della Zakat?",
-      faqA1: "R: La Zakat è generalmente del 2,5% del patrimonio netto.",
-      faqQ2: "D: Quando è dovuta la Zakat?",
-      faqA2: "R: Una volta all'anno, dopo un anno lunare sul patrimonio zakatable.",
-      faqQ3: "D: Quali beni sono zakatable?",
-      faqA3: "R: Contanti, oro, argento, inventario aziendale e investimenti sono generalmente zakatable.",
-      summaryTitle: "Riepilogo",
-      summaryText: "Inserisci i valori e scegli la modalità. L'output mostra se sei sopra la Nisab e l'importo della Zakat.",
-      nisabValueLabel: "Nisab attuale:",
-      lastCalcLabel: "Ultimo calcolo:",
-      shareTitle: "Condividi",
-      shareText: "Condividi questo strumento per aiutare gli altri a calcolare la loro Zakat.",
-      copyLinkBtn: "Copia link",
-      footerText: "© 2025 EasyZakat • Privacy • Informazioni",
-      belowNisab: "Sei sotto la Nisab. Nessuna Zakat dovuta.",
-      resultText: "La tua Zakat è:",
-      invalidInput: "Per favore inserisci numeri validi.",
-      simplifiedMode: "Semplificato",
-      advancedMode: "Avanzato"
-    },
-
-    tr:{
-      title:"EasyZakat — Ücretsiz Zakat Hesaplayıcı",
-      subtitle:"Basit & ileri mod • Çok dilli",
-      langLabel:"Dil",
-      currencyLabel:"Para sembolü",
-      modeLabel:"Mod",
-      nisabLabel:"Nisab temeli",
-      calcTitle:"Zakatınızı Hesaplayın",
-      totalAssetsLabel:"Toplam varlıklar",
-      totalLiabilitiesLabel:"Toplam borçlar",
-      calcSimplifiedBtn:"Zakat Hesapla",
-      calcAdvancedBtn:"Zakat Hesapla (Gelişmiş)",
-      cashLabel:"Nakit & tasarruflar",
-      investmentsLabel:"Yatırımlar / işletme değeri",
-      inventoryLabel:"İş envanteri (piyasa değeri)",
-      goldWeightLabel:"Altın (gram)",
-      goldPriceLabel:"Gram başına altın fiyatı",
-      silverWeightLabel:"Gümüş (gram)",
-      silverPriceLabel:"Gram başına gümüş fiyatı",
-      debtsLabel:"Borçlar / yükümlülükler",
-      nisabInfo:"Nisab seçilen temele göre hesaplanır (Altın 85 g veya Gümüş 595 g).",
-      howWorks:"Çalışma: net varlık = varlıklar - borçlar. Net varlık ≥ Nisab ise Zakat = net varlığın %2,5'i.",
-      whatIsZakatTitle:"Zakat nedir?",
-      whatIsZakatDesc:"Zakat İslam'da zorunlu sadakadır — zakatlı servetinizin bir kısmı (genelde %2,5) ihtiyaç sahiplerine verilir.",
-      faqQ1:"S: Zakat yüzde kaçtır?",
-      faqA1:"C: Genelde net varlığın %2,5'udur.",
-      faqQ2:"S: Zakat ne zaman ödenir?",
-      faqA2:"C: Zakat, zakatlı servet üzerine bir ay yılı geçtikten sonra yıllık olarak ödenir.",
-      faqQ3:"S: Hangi varlıklar zakatlıdır?",
-      faqA3:"C: Nakit, altın, gümüş, iş envanteri ve yatırımlar genellikle zakatlıdır.",
-      summaryTitle:"Özet",
-      summaryText:"Değerleri girin ve modu seçin. Çıktı, Nisab'ın üstünde olup olmadığınızı ve Zakat miktarını gösterir.",
-      nisabValueLabel:"Güncel Nisab:",
-      lastCalcLabel:"Son hesaplama:",
-      shareTitle:"Paylaş",
-      shareText:"Bu aracı paylaşarak başkalarının Zakat'ını hesaplamasına yardımcı olun.",
-      copyLinkBtn:"Bağlantıyı kopyala",
-      footerText:"© 2025 EasyZakat • Gizlilik • Hakkında",
-      belowNisab:"Nisab'ın altında kaldınız. Zakat yok.",
-      resultText:"Zakatınız:",
-      invalidInput:"Lütfen geçerli sayılar girin.",
-      simplifiedMode:"Basit",
-      advancedMode:"Gelişmiş"
-    },
-
-    fa: {
-      title: "EasyZakat — محاسبه‌گر زکات رایگان",
-      subtitle: "حالت ساده و پیشرفته • چندزبانه",
-      langLabel: "زبان",
-      currencyLabel: "نماد ارز",
-      modeLabel: "حالت",
-      nisabLabel: "پایه نصاب",
-      calcTitle: "زکات خود را محاسبه کنید",
-      totalAssetsLabel: "کل دارایی‌ها",
-      totalLiabilitiesLabel: "کل بدهی‌ها",
-      calcSimplifiedBtn: "محاسبه زکات",
-      calcAdvancedBtn: "محاسبه زکات (پیشرفته)",
-      cashLabel: "نقد و پس‌انداز",
-      investmentsLabel: "سرمایه‌گذاری‌ها / ارزش کسب‌وکار",
-      inventoryLabel: "موجودی کسب‌وکار (ارزش بازاری)",
-      goldWeightLabel: "طلا (گرم)",
-      goldPriceLabel: "قیمت طلا به ازای هر گرم",
-      silverWeightLabel: "نقره (گرم)",
-      silverPriceLabel: "قیمت نقره به ازای هر گرم",
-      debtsLabel: "بدهی‌ها / تعهدات",
-      nisabInfo: "نصاب از پایه انتخاب شده (طلا 85 گرم یا نقره 595 گرم) محاسبه می‌شود.",
-      howWorks: "نحوه محاسبه: دارایی خالص = دارایی‌ها - بدهی‌ها. اگر دارایی خالص ≥ نصاب، زکات = 2.5٪ دارایی خالص.",
-      whatIsZakatTitle: "زکات چیست؟",
-      whatIsZakatDesc: "زکات بخش اجباری از کمک‌های مالی در اسلام است — بخشی از دارایی‌های zakatable (معمولاً 2.5٪) که به نیازمندان داده می‌شود.",
-      faqQ1: "پ: میزان زکات چند درصد است؟",
-      faqA1: "ج: زکات معمولاً 2.5٪ از دارایی خالص zakatable است.",
-      faqQ2: "پ: زکات چه زمانی باید پرداخت شود؟",
-      faqA2: "ج: زکات پس از گذشت یک سال قمری بر دارایی zakatable، سالانه واجب می‌شود.",
-      faqQ3: "پ: چه دارایی‌هایی zakatable محسوب می‌شوند؟",
-      faqA3: "ج: پول نقد، طلا، نقره، موجودی کسب‌وکار و سرمایه‌گذاری‌ها معمولاً zakatable هستند.",
-      summaryTitle: "خلاصه",
-      summaryText: "مقادیر را وارد کرده و حالت را انتخاب کنید. خروجی نشان می‌دهد آیا بالاتر از نصاب هستید و مقدار زکات چقدر است.",
-      nisabValueLabel: "نصاب فعلی:",
-      lastCalcLabel: "آخرین محاسبه:",
-      shareTitle: "اشتراک‌گذاری",
-      shareText: "این ابزار را به اشتراک بگذارید تا به دیگران در محاسبه زکات کمک کنید.",
-      copyLinkBtn: "کپی لینک",
-      footerText: "© 2025 EasyZakat • حریم خصوصی • درباره",
-      belowNisab: "شما زیر نصاب هستید. زکات واجب نیست.",
-      resultText: "زکات شما:",
-      invalidInput: "لطفاً اعداد معتبر وارد کنید.",
-      simplifiedMode: "ساده",
-      advancedMode: "پیشرفته"
-    },
-
-    ar: {
-      title: "EasyZakat — حاسبة الزكاة المجانية",
-      subtitle: "وضع مبسط ومتقدم • متعدد اللغات",
-      langLabel: "اللغة",
-      currencyLabel: "رمز العملة",
-      modeLabel: "الوضع",
-      nisabLabel: "أساس النصاب",
-      calcTitle: "احسب زكاتك",
-      totalAssetsLabel: "إجمالي الأصول",
-      totalLiabilitiesLabel: "إجمالي الالتزامات",
-      calcSimplifiedBtn: "احسب الزكاة",
-      calcAdvancedBtn: "احسب الزكاة (متقدم)",
-      cashLabel: "النقد والمدخرات",
-      investmentsLabel: "الاستثمارات / قيمة الأعمال",
-      inventoryLabel: "مخزون الأعمال (القيمة السوقية)",
-      goldWeightLabel: "الذهب (جرام)",
-      goldPriceLabel: "سعر الذهب لكل غرام",
-      silverWeightLabel: "الفضة (جرام)",
-      silverPriceLabel: "سعر الفضة لكل غرام",
-      debtsLabel: "الديون / الالتزامات",
-      nisabInfo: "يتم حساب النصاب بناءً على الأساس المحدد (الذهب 85 غ أو الفضة 595 غ).",
-      howWorks: "كيفية الحساب: الأصول الصافية = الأصول - الالتزامات. إذا كانت الأصول الصافية ≥ النصاب، فالزكاة = 2.5% من الأصول الصافية.",
-      whatIsZakatTitle: "ما هي الزكاة؟",
-      whatIsZakatDesc: "الزكاة هي صدقة واجبة في الإسلام — جزء من أموالك الزكاتية (عادةً 2.5%) يُعطى للمستحقين.",
-      faqQ1: "س: ما نسبة الزكاة؟",
-      faqA1: "ج: عادةً ما تكون الزكاة 2.5% من صافي الأصول الزكاتية.",
-      faqQ2: "س: متى تجب الزكاة؟",
-      faqA2: "ج: تجب الزكاة بعد مرور سنة هجرية على الأصول الزكاتية.",
-      faqQ3: "س: ما هي الأصول الزكاتية؟",
-      faqA3: "ج: النقود، الذهب، الفضة، مخزون الأعمال، والاستثمارات عادةً ما تكون زكاتية.",
-      summaryTitle: "ملخص",
-      summaryText: "أدخل القيم واختر الوضع. يعرض الناتج ما إذا كنت فوق النصاب ومقدار الزكاة.",
-      nisabValueLabel: "النصاب الحالي:",
-      lastCalcLabel: "آخر حساب:",
-      shareTitle: "مشاركة",
-      shareText: "شارك هذه الأداة لمساعدة الآخرين في حساب زكاتهم.",
-      copyLinkBtn: "نسخ الرابط",
-      footerText: "© 2025 EasyZakat • الخصوصية • حول",
-      belowNisab: "أنت تحت النصاب. لا زكاة.",
-      resultText: "زكاتك:",
-      invalidInput: "الرجاء إدخال أرقام صحيحة.",
-      simplifiedMode: "مبسّط",
-      advancedMode: "متقدّم"
-    },
-
-    ur: {
-      title: "EasyZakat — مفت زکات کیلکولیٹر",
-      subtitle: "سادہ اور جدید طریقہ • کثیرالزبان",
-      langLabel: "زبان",
-      currencyLabel: "کرنسی علامت",
-      modeLabel: "موڈ",
-      nisabLabel: "نصاب کی بنیاد",
-      calcTitle: "اپنی زکات حساب کریں",
-      totalAssetsLabel: "کل اثاثے",
-      totalLiabilitiesLabel: "کل واجبات",
-      calcSimplifiedBtn: "زکات حساب کریں",
-      calcAdvancedBtn: "زکات حساب کریں (جدید)",
-      cashLabel: "نقد & بچت",
-      investmentsLabel: "سرمایہ کاری / کاروبار کی قیمت",
-      inventoryLabel: "کاروباری انوینٹری (مارکیٹ قیمت)",
-      goldWeightLabel: "سونا (گرام)",
-      goldPriceLabel: "فی گرام سونے کی قیمت",
-      silverWeightLabel: "چاندی (گرام)",
-      silverPriceLabel: "فی گرام چاندی کی قیمت",
-      debtsLabel: "قرضے / واجبات",
-      nisabInfo: "نصاب منتخب بنیاد (سونا 85 گرام یا چاندی 595 گرام) سے حساب ہوتا ہے۔",
-      howWorks: "طریقہ: خالص اثاثے = اثاثے - واجبات۔ اگر خالص اثاثے ≥ نصاب، زکات = خالص اثاثوں کا 2.5٪۔",
-      whatIsZakatTitle: "زکات کیا ہے؟",
-      whatIsZakatDesc: "زکات اسلام میں واجب صدقہ ہے — آپ کی زکات کے اہل دولت کا ایک حصہ (عام طور پر 2.5٪) مستحقین کو دیا جاتا ہے۔",
-      faqQ1: "س: زکات کا فیصد کیا ہے؟",
-      faqA1: "ج: عام طور پر خالص اثاثوں کا 2.5٪۔",
-      faqQ2: "س: زکات کب واجب ہوتی ہے؟",
-      faqA2: "ج: جب خالص اثاثوں پر ایک ہجری سال گزر جائے تب سالانہ زکات واجب ہوتی ہے۔",
-      faqQ3: "س: کون سے اثاثے زکات کے اہل ہیں؟",
-      faqA3: "ج: نقد، سونا، چاندی، کاروباری انونٹری اور سرمایہ کاری عموماً زکات کے اہل ہوتے ہیں۔",
-      summaryTitle: "خلاصہ",
-      summaryText: "قدروں کو درج کریں اور موڈ منتخب کریں۔ نتیجہ بتائے گا کہ آیا آپ نصاب سے اوپر ہیں اور زکات کی رقم کیا ہے۔",
-      nisabValueLabel: "موجودہ نصاب:",
-      lastCalcLabel: "آخری حساب:",
-      shareTitle: "اشتراک کریں",
-      shareText: "یہ آلہ شیئر کریں تاکہ دوسروں کی زکات حساب کرنے میں مدد ملے۔",
-      copyLinkBtn: "لنک کاپی کریں",
-      footerText: "© 2025 EasyZakat • رازداری • ہمارے بارے میں",
-      belowNisab: "آپ نصاب سے نیچے ہیں۔ زکات واجب نہیں۔",
-      resultText: "آپ کی زکات:",
-      invalidInput: "براہ کرم درست اعداد داخل کریں۔",
-      simplifiedMode: "سادہ",
-      advancedMode: "جدید"
+    function setMode(m) {
+      mode = m;
+      renderForm();
     }
-  };
 
-  /**************************************************************************
-   * UTILITY: format number with currency (simple)
-   **************************************************************************/
-  function fmt(num, symbol) {
-    if (isNaN(num)) return "";
-    // show thousands separators, two decimals
-    return symbol + Number(num).toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
-  }
-
-  /**************************************************************************
-   * STATE & ELEMENTS
-   **************************************************************************/
-  const state = {
-    lang: 'en',
-    mode: 'simplified' // or 'advanced'
-  };
-
-  const els = {
-    langSelect: document.getElementById('lang'),
-    currency: document.getElementById('currency'),
-    simplifiedBtn: document.getElementById('simplifiedBtn'),
-    advancedBtn: document.getElementById('advancedBtn'),
-    nisabChoice: document.getElementById('nisabChoice'),
-    // simplified
-    totalAssets: document.getElementById('totalAssets'),
-    totalLiabilities: document.getElementById('totalLiabilities'),
-    calcSimplified: document.getElementById('calcSimplified'),
-    simplifiedResult: document.getElementById('simplifiedResult'),
-    // advanced
-    cash: document.getElementById('cash'),
-    investments: document.getElementById('investments'),
-    inventory: document.getElementById('inventory'),
-    goldWeight: document.getElementById('goldWeight'),
-    goldPrice: document.getElementById('goldPrice'),
-    silverWeight: document.getElementById('silverWeight'),
-    silverPrice: document.getElementById('silverPrice'),
-    debts: document.getElementById('debts'),
-    calcAdvanced: document.getElementById('calcAdvanced'),
-    advancedResult: document.getElementById('advancedResult'),
-    // summary
-    nisabValue: document.getElementById('nisabValue'),
-    lastCalc: document.getElementById('lastCalc'),
-    copyLinkBtn: document.getElementById('copyLinkBtn'),
-    // textual elements
-    titleEl: document.getElementById('title'),
-    subtitleEl: document.getElementById('subtitle'),
-    calcTitleEl: document.getElementById('calcTitle'),
-    totalAssetsLabel: document.getElementById('totalAssetsLabel'),
-    totalLiabilitiesLabel: document.getElementById('totalLiabilitiesLabel'),
-    calcSimplifiedBtnEl: document.getElementById('calcSimplified'),
-    calcAdvancedBtnEl: document.getElementById('calcAdvanced'),
-    cashLabel: document.getElementById('cashLabel'),
-    investmentsLabel: document.getElementById('investmentsLabel'),
-    inventoryLabel: document.getElementById('inventoryLabel'),
-    goldWeightLabel: document.getElementById('goldWeightLabel'),
-    goldPriceLabel: document.getElementById('goldPriceLabel'),
-    silverWeightLabel: document.getElementById('silverWeightLabel'),
-    silverPriceLabel: document.getElementById('silverPriceLabel'),
-    debtsLabel: document.getElementById('debtsLabel'),
-    nisabInfoEl: document.getElementById('nisabInfo'),
-    howWorksEl: document.getElementById('howWorks'),
-    whatIsZakatTitleEl: document.getElementById('whatIsZakatTitle'),
-    whatIsZakatDescEl: document.getElementById('whatIsZakatDesc'),
-    faqQ1: document.getElementById('faqQ1'),
-    faqA1: document.getElementById('faqA1'),
-    faqQ2: document.getElementById('faqQ2'),
-    faqA2: document.getElementById('faqA2'),
-    faqQ3: document.getElementById('faqQ3'),
-    faqA3: document.getElementById('faqA3'),
-    summaryTitle: document.getElementById('summaryTitle'),
-    summaryText: document.getElementById('summaryText'),
-    nisabValueLabelEl: document.getElementById('nisabValueLabel'),
-    lastCalcLabelEl: document.getElementById('lastCalcLabel'),
-    shareTitle: document.getElementById('shareTitle'),
-    shareText: document.getElementById('shareText'),
-    copyLinkBtnEl: document.getElementById('copyLinkBtn'),
-    footerTextEl: document.getElementById('footerText'),
-    langLabelEl: document.getElementById('langLabel'),
-    currencyLabelEl: document.getElementById('currencyLabel'),
-    modeLabelEl: document.getElementById('modeLabel'),
-    nisabLabelEl: document.getElementById('nisabLabel'),
-    simplifiedSection: document.getElementById('simplifiedSection'),
-    advancedSection: document.getElementById('advancedSection'),
-    simplifiedResultEl: document.getElementById('simplifiedResult'),
-    advancedResultEl: document.getElementById('advancedResult')
-  };
-
-  /**************************************************************************
-   * LANGUAGE SWITCHING
-   **************************************************************************/
-  function applyTranslations(lang) {
-    const t = translations[lang] || translations['en'];
-    document.documentElement.lang = lang;
-    // RTL languages
-    const rtl = ['ar','fa','ur'];
-    document.body.classList.toggle('rtl', rtl.includes(lang));
-    // Update visible strings
-    els.titleEl.innerText = t.title;
-    els.subtitleEl.innerText = t.subtitle;
-    document.getElementById('langLabel').innerText = t.langLabel;
-    document.getElementById('currencyLabel').innerText = t.currencyLabel;
-    document.getElementById('modeLabel').innerText = t.modeLabel;
-    document.getElementById('nisabLabel').innerText = t.nisabLabel;
-    els.calcTitleEl.innerText = t.calcTitle;
-    els.totalAssetsLabel.innerText = t.totalAssetsLabel;
-    els.totalLiabilitiesLabel.innerText = t.totalLiabilitiesLabel;
-    els.calcSimplifiedBtnEl.innerText = t.calcSimplifiedBtn;
-    els.calcAdvancedBtnEl.innerText = t.calcAdvancedBtn;
-    els.cashLabel.innerText = t.cashLabel;
-    els.investmentsLabel.innerText = t.investmentsLabel;
-    els.inventoryLabel.innerText = t.inventoryLabel;
-    els.goldWeightLabel.innerText = t.goldWeightLabel;
-    els.goldPriceLabel.innerText = t.goldPriceLabel;
-    els.silverWeightLabel.innerText = t.silverWeightLabel;
-    els.silverPriceLabel.innerText = t.silverPriceLabel;
-    els.debtsLabel.innerText = t.debtsLabel;
-    els.nisabInfoEl.innerText = t.nisabInfo;
-    els.howWorksEl.innerText = t.howWorks;
-    els.whatIsZakatTitleEl.innerText = t.whatIsZakatTitle;
-    els.whatIsZakatDescEl.innerText = t.whatIsZakatDesc;
-    els.faqQ1.innerText = t.faqQ1;
-    els.faqA1.innerText = t.faqA1;
-    els.faqQ2.innerText = t.faqQ2;
-    els.faqA2.innerText = t.faqA2;
-    els.faqQ3.innerText = t.faqQ3;
-    els.faqA3.innerText = t.faqA3;
-    els.summaryTitle.innerText = t.summaryTitle;
-    els.summaryText.innerText = t.summaryText;
-    els.nisabValueLabelEl.innerText = t.nisabValueLabel;
-    els.lastCalcLabelEl.innerText = t.lastCalcLabel;
-    els.shareTitle.innerText = t.shareTitle;
-    els.shareText.innerText = t.shareText;
-    els.copyLinkBtnEl.innerText = t.copyLinkBtn;
-    els.footerTextEl.innerText = t.footerText;
-    // Update buttons styling text for selected mode
-    els.simplifiedBtn.innerText = t.simplifiedMode;
-    els.advancedBtn.innerText = t.advancedMode;
-  }
-
-  // initial language from query param or default english
-  function initLangFromUrl() {
-    const params = new URLSearchParams(location.search);
-    const lang = params.get('lang') || 'en';
-    els.langSelect.value = lang;
-    state.lang = lang;
-    applyTranslations(lang);
-  }
-
-  els.langSelect.addEventListener('change', (e) => {
-    const lang = e.target.value;
-    state.lang = lang;
-    applyTranslations(lang);
-    // update url param for shareability / indexing
-    const u = new URL(location);
-    u.searchParams.set('lang', lang);
-    history.replaceState(null, '', u.toString());
-  });
-
-  /**************************************************************************
-   * MODE TOGGLE
-   **************************************************************************/
-  els.simplifiedBtn.addEventListener('click', () => {
-    state.mode = 'simplified';
-    els.simplifiedSection.style.display = 'block';
-    els.advancedSection.style.display = 'none';
-    els.simplifiedBtn.classList.add('btn','secondary'); // visual - we keep it simple
-    els.advancedBtn.classList.remove('btn');
-  });
-  els.advancedBtn.addEventListener('click', () => {
-    state.mode = 'advanced';
-    els.simplifiedSection.style.display = 'none';
-    els.advancedSection.style.display = 'block';
-    els.advancedBtn.classList.add('btn');
-  });
-
-  /**************************************************************************
-   * CALCULATION LOGIC
-   * - nisab base: gold -> 85 grams ; silver -> 595 grams
-   * - support any currency symbol chosen by user
-   **************************************************************************/
-  function getCurrencySymbol() {
-    const s = (els.currency.value || '€').trim();
-    return s.length ? s : '€';
-  }
-
-  function calculateNisabFromInput() {
-    // If goldPrice provided, nisabGold = 85 * goldPrice
-    // If silverPrice provided, nisabSilver = 595 * silverPrice
-    const goldPrice = parseFloat(els.goldPrice.value) || 0;
-    const silverPrice = parseFloat(els.silverPrice.value) || 0;
-    const nisabGold = goldPrice > 0 ? 85 * goldPrice : null;
-    const nisabSilver = silverPrice > 0 ? 595 * silverPrice : null;
-    return {nisabGold, nisabSilver, goldPrice, silverPrice};
-  }
-
-  function displayNisab() {
-    const {nisabGold, nisabSilver} = calculateNisabFromInput();
-    const choice = els.nisabChoice.value;
-    const sym = getCurrencySymbol();
-    let text = '';
-    if (choice === 'gold' && nisabGold) {
-      text = fmt(nisabGold, sym) + ' (' + '85 g gold' + ')';
-    } else if (choice === 'silver' && nisabSilver) {
-      text = fmt(nisabSilver, sym) + ' (' + '595 g silver' + ')';
-    } else {
-      // fallback: show both if available
-      if (nisabGold) text += 'Gold basis: ' + fmt(nisabGold, sym) + '. ';
-      if (nisabSilver) text += 'Silver basis: ' + fmt(nisabSilver, sym) + '. ';
-      if (!nisabGold && !nisabSilver) text = 'Input gold or silver price to compute Nisab.';
+    function switchLanguage() {
+      currentLang = document.getElementById("lang").value;
+      document.getElementById("title").innerText = translations[currentLang].title;
+      renderForm();
     }
-    els.nisabValue.innerText = text;
-  }
 
-  // simplified calculation
-  els.calcSimplified.addEventListener('click', () => {
-    const assets = parseFloat(els.totalAssets.value) || 0;
-    const liabilities = parseFloat(els.totalLiabilities.value) || 0;
-    const net = assets - liabilities;
-    const {nisabGold, nisabSilver} = calculateNisabFromInput();
-    const choice = els.nisabChoice.value;
-    const sym = getCurrencySymbol();
-    if (isNaN(net)) {
-      els.simplifiedResult.style.display = 'block';
-      els.simplifiedResult.innerText = translations[state.lang].invalidInput;
-      return;
+    function renderForm() {
+      const inputsDiv = document.getElementById("inputs");
+      inputsDiv.innerHTML = "";
+      const fields = mode === "simple"
+        ? translations[currentLang].simpleFields
+        : translations[currentLang].detailedFields;
+
+      for (let key in fields) {
+        const label = document.createElement("label");
+        label.textContent = fields[key];
+        const input = document.createElement("input");
+        input.type = "number"; input.id = key; input.min = "0"; input.step = "0.01";
+        inputsDiv.appendChild(label);
+        inputsDiv.appendChild(input);
+      }
+      document.querySelector("button[type='button']").innerText = translations[currentLang].calculate;
     }
-    let nisab = null;
-    if (choice === 'gold' && nisabGold) nisab = nisabGold;
-    if (choice === 'silver' && nisabSilver) nisab = nisabSilver;
-    // if not available, pick gold if exists else silver else null
-    if (!nisab) nisab = nisabGold || nisabSilver || 0;
-    displayNisab();
-    if (net <= 0 || net < nisab) {
-      els.simplifiedResult.style.display = 'block';
-      els.simplifiedResult.innerText = translations[state.lang].belowNisab;
-      els.lastCalc.innerText = (new Date()).toLocaleString();
-      return;
+
+    function calculateZakat() {
+      let total = 0;
+      const fields = mode === "simple"
+        ? translations[currentLang].simpleFields
+        : translations[currentLang].detailedFields;
+
+      for (let key in fields) {
+        const val = parseFloat(document.getElementById(key).value) || 0;
+        if (key === "debts") total -= val;
+        else total += val;
+      }
+
+      const resultDiv = document.getElementById("result");
+      if (total >= nisab) {
+        const zakat = total * 0.025;
+        resultDiv.innerText = translations[currentLang].result(zakat);
+      } else {
+        resultDiv.innerText = "No Zakat due (below Nisab).";
+      }
+      resultDiv.style.display = "block";
     }
-    const zakat = net * 0.025;
-    els.simplifiedResult.style.display = 'block';
-    els.simplifiedResult.innerText = translations[state.lang].resultText + ' ' + fmt(zakat, sym);
-    els.lastCalc.innerText = (new Date()).toLocaleString();
-    // set summary last calculation
-  });
 
-  // advanced calculation
-  els.calcAdvanced.addEventListener('click', () => {
-    const cash = parseFloat(els.cash.value) || 0;
-    const investments = parseFloat(els.investments.value) || 0;
-    const inventory = parseFloat(els.inventory.value) || 0;
-    const goldWeight = parseFloat(els.goldWeight.value) || 0;
-    const goldPrice = parseFloat(els.goldPrice.value) || 0;
-    const silverWeight = parseFloat(els.silverWeight.value) || 0;
-    const silverPrice = parseFloat(els.silverPrice.value) || 0;
-    const debts = parseFloat(els.debts.value) || 0;
-    const sym = getCurrencySymbol();
-
-    // compute metal values
-    const goldValue = goldWeight * goldPrice;
-    const silverValue = silverWeight * silverPrice;
-
-    const totalAssets = cash + investments + inventory + goldValue + silverValue;
-    const net = totalAssets - debts;
-
-    const nisabChoice = els.nisabChoice.value;
-    const nisabValues = calculateNisabFromInput();
-    let nisab = nisabChoice === 'gold' ? nisabValues.nisabGold : nisabValues.nisabSilver;
-    nisab = nisab || nisabValues.nisabGold || nisabValues.nisabSilver || 0;
-    displayNisab();
-
-    if (isNaN(net)) {
-      els.advancedResult.style.display = 'block';
-      els.advancedResult.innerText = translations[state.lang].invalidInput;
-      return;
-    }
-    if (net <= 0 || net < nisab) {
-      els.advancedResult.style.display = 'block';
-      els.advancedResult.innerText = translations[state.lang].belowNisab;
-      els.lastCalc.innerText = (new Date()).toLocaleString();
-      return;
-    }
-    const zakat = net * 0.025;
-    els.advancedResult.style.display = 'block';
-    els.advancedResult.innerText = translations[state.lang].resultText + ' ' + fmt(zakat, sym);
-    els.lastCalc.innerText = (new Date()).toLocaleString();
-  });
-
-  // listen to changes for nisab display updates
-  ['goldPrice','silverPrice','goldWeight','silverWeight'].forEach(id=>{
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('input', displayNisab);
-  });
-  els.nisabChoice.addEventListener('change', displayNisab);
-
-  // copy link share
-  els.copyLinkBtn.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(location.href);
-      alert(translations[state.lang].copyLinkBtn + ' ✓');
-    } catch (e) {
-      alert('Copy failed — please copy the URL manually.');
-    }
-  });
-
-  // load initial language and display
-  initLangFromUrl();
-  displayNisab();
-
-  // accessibility: set default visible mode styling
-  // ensure simplified is visible by default
-  els.simplifiedSection.style.display = 'block';
-  els.advancedSection.style.display = 'none';
-  // set button texts
-  els.simplifiedBtn.innerText = translations[state.lang].simplifiedMode;
-  els.advancedBtn.innerText = translations[state.lang].advancedMode;
-
-  /**************************************************************************
-   * Small SEO helper: ensure the page has some content text length out of the box
-   * (we included descriptions above). For improved ranking later, add a blog
-   * / articles directory with basic guides (How to calculate Nisab, local rules).
-   **************************************************************************/
+    // Initial render
+    renderForm();
   </script>
 </body>
 </html>

@@ -7,64 +7,61 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
+      margin: 20px;
       background: #f8f9fa;
       color: #333;
     }
-    header {
-      background: #007bff; color: white;
-      padding: 1rem; text-align: center;
-    }
     .container {
       max-width: 700px;
-      margin: 2rem auto;
+      margin: auto;
       background: white;
-      padding: 2rem;
+      padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-    h2 { text-align: center; }
-    label { display: block; margin: 0.5rem 0 0.2rem; }
-    input {
-      width: 100%; padding: 0.5rem;
-      border: 1px solid #ccc; border-radius: 5px;
+    h1, h2 {
+      text-align: center;
+      color: #00796B;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
     }
     button {
-      margin-top: 1rem;
-      padding: 0.7rem 1.5rem;
-      background: #007bff; color: white;
-      border: none; border-radius: 5px;
+      background: #00796B;
+      color: white;
+      border: none;
+      margin-top: 15px;
       cursor: pointer;
     }
-    button:hover { background: #0056b3; }
-    .result {
-      margin-top: 1rem;
-      padding: 1rem;
-      background: #e9f7ef;
-      border: 1px solid #28a745;
-      border-radius: 5px;
-      font-weight: bold;
+    button:hover {
+      background: #004D40;
     }
-    .mode-switch {
+    .result {
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #00796B;
       text-align: center;
-      margin-bottom: 1rem;
     }
     .lang-switch {
-      margin-bottom: 1rem;
+      margin-bottom: 20px;
       text-align: right;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1 id="title">EasyZakat Calculator</h1>
-  </header>
-
   <div class="container">
-    <!-- Language Switcher -->
     <div class="lang-switch">
-      <label for="lang">🌍 Language:</label>
-      <select id="lang" onchange="switchLanguage()">
+      <label for="language">🌍 Language:</label>
+      <select id="language" onchange="switchLanguage()">
         <option value="en">English</option>
         <option value="de">Deutsch</option>
         <option value="fr">Français</option>
@@ -77,122 +74,221 @@
       </select>
     </div>
 
-    <!-- Mode Switch -->
-    <div class="mode-switch">
-      <button onclick="setMode('simple')">🌿 Simplified</button>
-      <button onclick="setMode('detailed')">📊 Detailed</button>
+    <h1 id="title">EasyZakat Calculator</h1>
+
+    <label for="mode" id="modeLabel">Choose Calculator Mode:</label>
+    <select id="mode" onchange="toggleMode()">
+      <option value="simple">Simplified</option>
+      <option value="detailed">Detailed</option>
+    </select>
+
+    <!-- Simplified Calculator -->
+    <div id="simpleCalc">
+      <label id="wealthLabel">Total Wealth (cash, savings, gold, etc.):</label>
+      <input type="number" id="wealth" placeholder="Enter amount in €">
+      <button onclick="calculateSimpleZakat()" id="calcSimpleBtn">Calculate Zakat</button>
     </div>
 
-    <!-- Form -->
-    <form id="zakatForm">
-      <div id="inputs"></div>
-      <button type="button" onclick="calculateZakat()">Calculate Zakat</button>
-    </form>
+    <!-- Detailed Calculator -->
+    <div id="detailedCalc" style="display:none;">
+      <label id="cashLabel">Cash & Savings:</label>
+      <input type="number" id="cash" placeholder="€">
 
-    <!-- Result -->
-    <div id="result" class="result" style="display:none;"></div>
+      <label id="goldLabel">Gold & Silver (market value):</label>
+      <input type="number" id="gold" placeholder="€">
+
+      <label id="investmentsLabel">Investments (shares, crypto, etc.):</label>
+      <input type="number" id="investments" placeholder="€">
+
+      <label id="businessLabel">Business Assets (after expenses):</label>
+      <input type="number" id="business" placeholder="€">
+
+      <label id="debtsLabel">Debts (short-term, payable within 1 year):</label>
+      <input type="number" id="debts" placeholder="€">
+
+      <button onclick="calculateDetailedZakat()" id="calcDetailedBtn">Calculate Zakat</button>
+    </div>
+
+    <div class="result" id="result"></div>
   </div>
 
   <script>
-    // Nisab threshold (approx: 85g gold * 60€ = ~5100€) – can adjust
-    const nisab = 5100;
-
-    let mode = "simple";
-    let currentLang = "en";
-
+    // Language translations
     const translations = {
       en: {
         title: "EasyZakat Calculator",
-        simpleFields: {
-          savings: "Savings (Cash/Bank)",
-          gold: "Gold Value (€)",
-          silver: "Silver Value (€)"
-        },
-        detailedFields: {
-          cash: "Cash & Bank",
-          gold: "Gold Value (€)",
-          silver: "Silver Value (€)",
-          investments: "Investments (Stocks, Funds)",
-          business: "Business Assets",
-          debts: "Debts (Deductible)"
-        },
-        calculate: "Calculate Zakat",
-        result: amt => `Your Zakat is: €${amt.toFixed(2)}`
+        modeLabel: "Choose Calculator Mode:",
+        wealthLabel: "Total Wealth (cash, savings, gold, etc.):",
+        calcSimpleBtn: "Calculate Zakat",
+        cashLabel: "Cash & Savings:",
+        goldLabel: "Gold & Silver (market value):",
+        investmentsLabel: "Investments (shares, crypto, etc.):",
+        businessLabel: "Business Assets (after expenses):",
+        debtsLabel: "Debts (short-term, payable within 1 year):",
+        calcDetailedBtn: "Calculate Zakat"
       },
       de: {
-        title: "Zakat Rechner",
-        simpleFields: {
-          savings: "Ersparnisse (Bargeld/Bank)",
-          gold: "Goldwert (€)",
-          silver: "Silberwert (€)"
-        },
-        detailedFields: {
-          cash: "Bargeld & Bank",
-          gold: "Goldwert (€)",
-          silver: "Silberwert (€)",
-          investments: "Investitionen (Aktien, Fonds)",
-          business: "Geschäftsvermögen",
-          debts: "Schulden (abziehbar)"
-        },
-        calculate: "Zakat berechnen",
-        result: amt => `Ihre Zakat beträgt: €${amt.toFixed(2)}`
+        title: "EasyZakat Rechner",
+        modeLabel: "Modus wählen:",
+        wealthLabel: "Gesamtvermögen (Bargeld, Ersparnisse, Gold, etc.):",
+        calcSimpleBtn: "Zakat berechnen",
+        cashLabel: "Bargeld & Ersparnisse:",
+        goldLabel: "Gold & Silber (Marktwert):",
+        investmentsLabel: "Investitionen (Aktien, Krypto, etc.):",
+        businessLabel: "Geschäftsvermögen (nach Ausgaben):",
+        debtsLabel: "Schulden (kurzfristig, innerhalb 1 Jahres fällig):",
+        calcDetailedBtn: "Zakat berechnen"
       },
-      // TODO: Add other translations (fr, es, it, nl, ar, fa, ur) – structure same as above
+      fr: {
+        title: "Calculateur Zakat Facile",
+        modeLabel: "Choisir le mode de calcul:",
+        wealthLabel: "Richesse totale (liquidités, épargne, or, etc.):",
+        calcSimpleBtn: "Calculer la Zakat",
+        cashLabel: "Liquidités & Épargne:",
+        goldLabel: "Or & Argent (valeur marchande):",
+        investmentsLabel: "Investissements (actions, crypto, etc.):",
+        businessLabel: "Actifs commerciaux (après dépenses):",
+        debtsLabel: "Dettes (à court terme, dans l'année):",
+        calcDetailedBtn: "Calculer la Zakat"
+      },
+      es: {
+        title: "Calculadora Fácil de Zakat",
+        modeLabel: "Elige modo:",
+        wealthLabel: "Riqueza total (efectivo, ahorros, oro, etc.):",
+        calcSimpleBtn: "Calcular Zakat",
+        cashLabel: "Efectivo y Ahorros:",
+        goldLabel: "Oro y Plata (valor de mercado):",
+        investmentsLabel: "Inversiones (acciones, crypto, etc.):",
+        businessLabel: "Activos empresariales (después de gastos):",
+        debtsLabel: "Deudas (a corto plazo, en 1 año):",
+        calcDetailedBtn: "Calcular Zakat"
+      },
+      it: {
+        title: "Calcolatore Zakat Facile",
+        modeLabel: "Scegli modalità:",
+        wealthLabel: "Patrimonio totale (contanti, risparmi, oro, ecc.):",
+        calcSimpleBtn: "Calcola Zakat",
+        cashLabel: "Contanti e Risparmi:",
+        goldLabel: "Oro e Argento (valore di mercato):",
+        investmentsLabel: "Investimenti (azioni, crypto, ecc.):",
+        businessLabel: "Beni aziendali (dopo spese):",
+        debtsLabel: "Debiti (a breve termine, entro 1 anno):",
+        calcDetailedBtn: "Calcola Zakat"
+      },
+      nl: {
+        title: "Eenvoudige Zakat Calculator",
+        modeLabel: "Kies modus:",
+        wealthLabel: "Totaal vermogen (contant, spaargeld, goud, etc.):",
+        calcSimpleBtn: "Bereken Zakat",
+        cashLabel: "Contant & Spaargeld:",
+        goldLabel: "Goud & Zilver (marktwaarde):",
+        investmentsLabel: "Investeringen (aandelen, crypto, etc.):",
+        businessLabel: "Bedrijfsactiva (na kosten):",
+        debtsLabel: "Schulden (kortlopend, binnen 1 jaar):",
+        calcDetailedBtn: "Bereken Zakat"
+      },
+      ar: {
+        title: "حاسبة الزكاة السهلة",
+        modeLabel: "اختر وضع الحساب:",
+        wealthLabel: "إجمالي الثروة (نقد، مدخرات، ذهب، إلخ):",
+        calcSimpleBtn: "احسب الزكاة",
+        cashLabel: "النقد والمدخرات:",
+        goldLabel: "الذهب والفضة (القيمة السوقية):",
+        investmentsLabel: "الاستثمارات (أسهم، عملات رقمية، إلخ):",
+        businessLabel: "أصول الأعمال (بعد النفقات):",
+        debtsLabel: "الديون (قصيرة الأجل، خلال سنة):",
+        calcDetailedBtn: "احسب الزكاة"
+      },
+      fa: {
+        title: "ماشین حساب زکات آسان",
+        modeLabel: "انتخاب حالت محاسبه:",
+        wealthLabel: "کل ثروت (پول نقد، پس انداز، طلا و غیره):",
+        calcSimpleBtn: "محاسبه زکات",
+        cashLabel: "نقدی و پس انداز:",
+        goldLabel: "طلا و نقره (ارزش بازار):",
+        investmentsLabel: "سرمایه‌گذاری‌ها (سهام، رمز ارز و غیره):",
+        businessLabel: "دارایی‌های تجاری (پس از هزینه‌ها):",
+        debtsLabel: "بدهی‌ها (کوتاه‌مدت، طی یک سال):",
+        calcDetailedBtn: "محاسبه زکات"
+      },
+      ur: {
+        title: "آسان زکوٰۃ کیلکولیٹر",
+        modeLabel: "کیلکولیٹر موڈ منتخب کریں:",
+        wealthLabel: "کل دولت (نقدی، بچت، سونا وغیرہ):",
+        calcSimpleBtn: "زکوٰۃ حساب کریں",
+        cashLabel: "نقد اور بچت:",
+        goldLabel: "سونا اور چاندی (مارکیٹ ویلیو):",
+        investmentsLabel: "سرمایہ کاری (شیئرز، کرپٹو وغیرہ):",
+        businessLabel: "کاروباری اثاثے (اخراجات کے بعد):",
+        debtsLabel: "قرضے (قلیل مدتی، ایک سال کے اندر):",
+        calcDetailedBtn: "زکوٰۃ حساب کریں"
+      }
     };
 
-    function setMode(m) {
-      mode = m;
-      renderForm();
-    }
-
     function switchLanguage() {
-      currentLang = document.getElementById("lang").value;
-      document.getElementById("title").innerText = translations[currentLang].title;
-      renderForm();
-    }
+      const lang = document.getElementById("language").value;
+      document.getElementById("title").innerText = translations[lang].title;
+      document.getElementById("modeLabel").innerText = translations[lang].modeLabel;
+      document.getElementById("wealthLabel").innerText = translations[lang].wealthLabel;
+      document.getElementById("calcSimpleBtn").innerText = translations[lang].calcSimpleBtn;
+      document.getElementById("cashLabel").innerText = translations[lang].cashLabel;
+      document.getElementById("goldLabel").innerText = translations[lang].goldLabel;
+      document.getElementById("investmentsLabel").innerText = translations[lang].investmentsLabel;
+      document.getElementById("businessLabel").innerText = translations[lang].businessLabel;
+      document.getElementById("debtsLabel").innerText = translations[lang].debtsLabel;
+      document.getElementById("calcDetailedBtn").innerText = translations[lang].calcDetailedBtn;
 
-    function renderForm() {
-      const inputsDiv = document.getElementById("inputs");
-      inputsDiv.innerHTML = "";
-      const fields = mode === "simple"
-        ? translations[currentLang].simpleFields
-        : translations[currentLang].detailedFields;
-
-      for (let key in fields) {
-        const label = document.createElement("label");
-        label.textContent = fields[key];
-        const input = document.createElement("input");
-        input.type = "number"; input.id = key; input.min = "0"; input.step = "0.01";
-        inputsDiv.appendChild(label);
-        inputsDiv.appendChild(input);
-      }
-      document.querySelector("button[type='button']").innerText = translations[currentLang].calculate;
-    }
-
-    function calculateZakat() {
-      let total = 0;
-      const fields = mode === "simple"
-        ? translations[currentLang].simpleFields
-        : translations[currentLang].detailedFields;
-
-      for (let key in fields) {
-        const val = parseFloat(document.getElementById(key).value) || 0;
-        if (key === "debts") total -= val;
-        else total += val;
-      }
-
-      const resultDiv = document.getElementById("result");
-      if (total >= nisab) {
-        const zakat = total * 0.025;
-        resultDiv.innerText = translations[currentLang].result(zakat);
+      // RTL adjustment for Arabic, Urdu, Farsi
+      if (["ar", "fa", "ur"].includes(lang)) {
+        document.body.style.direction = "rtl";
+        document.body.style.textAlign = "right";
       } else {
-        resultDiv.innerText = "No Zakat due (below Nisab).";
+        document.body.style.direction = "ltr";
+        document.body.style.textAlign = "left";
       }
-      resultDiv.style.display = "block";
     }
 
-    // Initial render
-    renderForm();
+    function toggleMode() {
+      const mode = document.getElementById("mode").value;
+      if (mode === "simple") {
+        document.getElementById("simpleCalc").style.display = "block";
+        document.getElementById("detailedCalc").style.display = "none";
+      } else {
+        document.getElementById("simpleCalc").style.display = "none";
+        document.getElementById("detailedCalc").style.display = "block";
+      }
+      document.getElementById("result").innerText = "";
+    }
+
+    function calculateSimpleZakat() {
+      const wealth = parseFloat(document.getElementById("wealth").value) || 0;
+      const nisab = 4000; // Approx. Nisab value in € (based on silver, can be adjusted)
+      if (wealth >= nisab) {
+        const zakat = wealth * 0.025;
+        document.getElementById("result").innerText = `Zakat Due: €${zakat.toFixed(2)}`;
+      } else {
+        document.getElementById("result").innerText = "No Zakat due (below Nisab).";
+      }
+    }
+
+    function calculateDetailedZakat() {
+      const cash = parseFloat(document.getElementById("cash").value) || 0;
+      const gold = parseFloat(document.getElementById("gold").value) || 0;
+      const investments = parseFloat(document.getElementById("investments").value) || 0;
+      const business = parseFloat(document.getElementById("business").value) || 0;
+      const debts = parseFloat(document.getElementById("debts").value) || 0;
+
+      const totalAssets = cash + gold + investments + business;
+      const netWealth = totalAssets - debts;
+      const nisab = 4000; // Approx Nisab in €
+
+      if (netWealth >= nisab) {
+        const zakat = netWealth * 0.025;
+        document.getElementById("result").innerText = `Zakat Due: €${zakat.toFixed(2)}`;
+      } else {
+        document.getElementById("result").innerText = "No Zakat due (below Nisab).";
+      }
+    }
   </script>
 </body>
 </html>

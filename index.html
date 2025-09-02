@@ -64,5 +64,135 @@
     <!-- Language Switcher -->
     <div class="lang-switch">
       <label for="lang">🌍 Language:</label>
+      <select id="lang" onchange="switchLanguage()">
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+        <option value="fr">Français</option>
+        <option value="es">Español</option>
+        <option value="it">Italiano</option>
+        <option value="nl">Nederlands</option>
+        <option value="ar">العربية</option>
+        <option value="fa">فارسی</option>
+        <option value="ur">اردو</option>
+      </select>
+    </div>
 
-    
+    <!-- Mode Switch -->
+    <div class="mode-switch">
+      <button onclick="setMode('simple')">🌿 Simplified</button>
+      <button onclick="setMode('detailed')">📊 Detailed</button>
+    </div>
+
+    <!-- Form -->
+    <form id="zakatForm">
+      <div id="inputs"></div>
+      <button type="button" onclick="calculateZakat()">Calculate Zakat</button>
+    </form>
+
+    <!-- Result -->
+    <div id="result" class="result" style="display:none;"></div>
+  </div>
+
+  <script>
+    // Nisab threshold (approx: 85g gold * 60€ = ~5100€) – can adjust
+    const nisab = 5100;
+
+    let mode = "simple";
+    let currentLang = "en";
+
+    const translations = {
+      en: {
+        title: "EasyZakat Calculator",
+        simpleFields: {
+          savings: "Savings (Cash/Bank)",
+          gold: "Gold Value (€)",
+          silver: "Silver Value (€)"
+        },
+        detailedFields: {
+          cash: "Cash & Bank",
+          gold: "Gold Value (€)",
+          silver: "Silver Value (€)",
+          investments: "Investments (Stocks, Funds)",
+          business: "Business Assets",
+          debts: "Debts (Deductible)"
+        },
+        calculate: "Calculate Zakat",
+        result: amt => `Your Zakat is: €${amt.toFixed(2)}`
+      },
+      de: {
+        title: "Zakat Rechner",
+        simpleFields: {
+          savings: "Ersparnisse (Bargeld/Bank)",
+          gold: "Goldwert (€)",
+          silver: "Silberwert (€)"
+        },
+        detailedFields: {
+          cash: "Bargeld & Bank",
+          gold: "Goldwert (€)",
+          silver: "Silberwert (€)",
+          investments: "Investitionen (Aktien, Fonds)",
+          business: "Geschäftsvermögen",
+          debts: "Schulden (abziehbar)"
+        },
+        calculate: "Zakat berechnen",
+        result: amt => `Ihre Zakat beträgt: €${amt.toFixed(2)}`
+      },
+      // TODO: Add other translations (fr, es, it, nl, ar, fa, ur) – structure same as above
+    };
+
+    function setMode(m) {
+      mode = m;
+      renderForm();
+    }
+
+    function switchLanguage() {
+      currentLang = document.getElementById("lang").value;
+      document.getElementById("title").innerText = translations[currentLang].title;
+      renderForm();
+    }
+
+    function renderForm() {
+      const inputsDiv = document.getElementById("inputs");
+      inputsDiv.innerHTML = "";
+      const fields = mode === "simple"
+        ? translations[currentLang].simpleFields
+        : translations[currentLang].detailedFields;
+
+      for (let key in fields) {
+        const label = document.createElement("label");
+        label.textContent = fields[key];
+        const input = document.createElement("input");
+        input.type = "number"; input.id = key; input.min = "0"; input.step = "0.01";
+        inputsDiv.appendChild(label);
+        inputsDiv.appendChild(input);
+      }
+      document.querySelector("button[type='button']").innerText = translations[currentLang].calculate;
+    }
+
+    function calculateZakat() {
+      let total = 0;
+      const fields = mode === "simple"
+        ? translations[currentLang].simpleFields
+        : translations[currentLang].detailedFields;
+
+      for (let key in fields) {
+        const val = parseFloat(document.getElementById(key).value) || 0;
+        if (key === "debts") total -= val;
+        else total += val;
+      }
+
+      const resultDiv = document.getElementById("result");
+      if (total >= nisab) {
+        const zakat = total * 0.025;
+        resultDiv.innerText = translations[currentLang].result(zakat);
+      } else {
+        resultDiv.innerText = "No Zakat due (below Nisab).";
+      }
+      resultDiv.style.display = "block";
+    }
+
+    // Initial render
+    renderForm();
+  </script>
+</body>
+</html>
